@@ -1,0 +1,35 @@
+# EnvSentry Configuration File
+# This file defines the schema for your environment variables,
+# specifying which variables are required, their types, and validation rules.
+
+# Example variable schema:
+# [variables.DATABASE_URL]
+# required = true
+# type = "url"
+# description = "PostgreSQL database connection string"
+#
+# [variables.API_KEY]
+# required = true
+# type = "string"
+# min_length = 32
+# description = "Third-party API authentication key"
+#
+# [variables.LOG_LEVEL]
+# required = false
+# type = "choice"
+# choices = ["DEBUG", "INFO", "WARNING", "ERROR"]
+# description = "Application logging level"
+#
+# [variables.MAX_CONNECTIONS]
+# required = false
+# type = "integer"
+# min = 1
+# max = 100
+# description = "Maximum number of concurrent connections"
+
+# Define your environment variables below:
+
+# [variables.YOUR_VARIABLE_NAME]
+# required = true
+# type = "string"
+# description = "Description of what this variable does"
