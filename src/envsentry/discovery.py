@@ -5,6 +5,7 @@ This module provides functionality to locate .env, .env.example, and
 """
 
 from __future__ import annotations
+
 from pathlib import Path
 
 

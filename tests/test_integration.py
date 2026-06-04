@@ -1,7 +1,5 @@
 """Integration tests for complete audit workflows."""
 
-from pathlib import Path
-import pytest
 
 from envsentry.engine import run_audit
 

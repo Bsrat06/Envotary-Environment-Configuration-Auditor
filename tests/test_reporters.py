@@ -1,14 +1,15 @@
 """Tests for EnvSentry reporters (terminal and JSON)."""
 
 from __future__ import annotations
+
 import json
 from datetime import datetime
 
 import pytest
 
 from envsentry.models import AuditResult, ValidationFinding
-from envsentry.reporters.terminal import TerminalReporter
 from envsentry.reporters.json import JSONReporter
+from envsentry.reporters.terminal import TerminalReporter
 
 
 def test_terminal_reporter_no_findings(capsys: pytest.CaptureFixture) -> None:

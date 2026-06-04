@@ -1,7 +1,5 @@
 """Tests for audit engine."""
 
-from pathlib import Path
-import pytest
 
 from envsentry.engine import run_audit
 

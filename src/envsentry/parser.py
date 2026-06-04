@@ -15,8 +15,9 @@ Supported Syntax:
 """
 
 from __future__ import annotations
-from pathlib import Path
+
 import re
+from pathlib import Path
 
 from envsentry.models import EnvVariable, ParsedEnvFile
 
@@ -65,7 +66,7 @@ def parse_dotenv_file(file_path: Path) -> ParsedEnvFile:
     key_occurrences: dict[str, list[int]] = {}
 
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             lines = f.readlines()
     except UnicodeDecodeError as e:
         raise ParseError(str(file_path), None, f"File encoding error: {e}")

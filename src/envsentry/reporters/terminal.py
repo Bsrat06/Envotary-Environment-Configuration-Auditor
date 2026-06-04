@@ -5,6 +5,7 @@ that displays audit results with proper formatting and color coding.
 """
 
 from __future__ import annotations
+
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table

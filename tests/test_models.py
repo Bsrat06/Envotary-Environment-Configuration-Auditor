@@ -5,9 +5,7 @@ Tests model construction, field types, serialization, and immutability.
 
 from __future__ import annotations
 
-import pytest
-
-from envsentry.models import EnvVariable, ParsedEnvFile, ValidationFinding, AuditResult
+from envsentry.models import AuditResult, EnvVariable, ParsedEnvFile, ValidationFinding
 
 
 class TestEnvVariable:

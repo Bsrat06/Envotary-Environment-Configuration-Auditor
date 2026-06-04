@@ -5,11 +5,12 @@ output suitable for CI/CD integration and automation.
 """
 
 from __future__ import annotations
+
 import json
 from datetime import datetime, timezone
 
-from envsentry.models import AuditResult
 from envsentry import __version__
+from envsentry.models import AuditResult
 
 
 class JSONReporter:

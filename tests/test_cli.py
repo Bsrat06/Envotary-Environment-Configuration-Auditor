@@ -1,6 +1,7 @@
 """Tests for EnvSentry CLI commands."""
 
 from __future__ import annotations
+
 import json
 from pathlib import Path
 
@@ -8,7 +9,7 @@ import pytest
 from typer.testing import CliRunner
 
 from envsentry.cli import app
-from envsentry.exit_codes import EXIT_SUCCESS, EXIT_AUDIT_FAILED, EXIT_ERROR
+from envsentry.exit_codes import EXIT_AUDIT_FAILED, EXIT_ERROR, EXIT_SUCCESS
 
 
 @pytest.fixture
@@ -259,7 +260,7 @@ def test_scan_output_never_contains_secrets(cli_runner: CliRunner, sample_projec
 
     # Rich may truncate output, but we check for secrets regardless
     # The important check is that secrets are NOT present
-    
+
     # Should NEVER show actual values
     assert "SECRETPASS" not in output
     assert "sk-proj-super_secret_key_12345" not in output

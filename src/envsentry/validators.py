@@ -6,11 +6,12 @@ without exposing actual environment variable values.
 """
 
 from __future__ import annotations
-from urllib.parse import urlparse
-import re
 
-from envsentry.models import EnvVariable, ParsedEnvFile, ValidationFinding
+import re
+from urllib.parse import urlparse
+
 from envsentry.config import SchemaVariable
+from envsentry.models import EnvVariable, ParsedEnvFile, ValidationFinding
 
 
 def check_missing_required(

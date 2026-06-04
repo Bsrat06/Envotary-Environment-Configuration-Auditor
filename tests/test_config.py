@@ -1,9 +1,8 @@
 """Tests for config module."""
 
-from pathlib import Path
 import pytest
 
-from envsentry.config import load_config, infer_schema_from_example, SchemaVariable
+from envsentry.config import infer_schema_from_example, load_config
 from envsentry.models import EnvVariable, ParsedEnvFile
 
 

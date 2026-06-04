@@ -5,14 +5,15 @@ and other error conditions.
 """
 
 from __future__ import annotations
-from pathlib import Path
+
 import sys
+from pathlib import Path
 
 import pytest
 
-from envsentry.parser import parse_dotenv_file
 from envsentry.config import load_config
 from envsentry.discovery import discover_files
+from envsentry.parser import parse_dotenv_file
 
 
 class TestParseErrors:

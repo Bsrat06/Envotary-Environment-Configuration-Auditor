@@ -5,9 +5,10 @@ inferring schemas from .env.example files.
 """
 
 from __future__ import annotations
+
+import sys
 from dataclasses import dataclass
 from pathlib import Path
-import sys
 
 if sys.version_info >= (3, 11):
     import tomllib

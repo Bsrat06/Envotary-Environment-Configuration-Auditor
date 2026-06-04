@@ -1,0 +1,37 @@
+[project]
+name = "node-example"
+description = "Node.js project example with typical Express application variables"
+
+[files]
+env_file = ".env"
+example_file = ".env.example"
+
+[settings]
+require_example_file = true
+allow_extra_variables = false
+
+[variables.NODE_ENV]
+type = "string"
+required = true
+choices = ["development", "production", "test"]
+
+[variables.PORT]
+type = "integer"
+required = true
+min = 1024
+max = 65535
+
+[variables.DATABASE_URL]
+type = "url"
+required = true
+secret = true
+
+[variables.JWT_SECRET]
+type = "string"
+required = true
+secret = true
+min_length = 32
+
+[variables.API_BASE_URL]
+type = "url"
+required = true

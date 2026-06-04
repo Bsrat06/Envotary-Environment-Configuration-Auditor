@@ -6,18 +6,17 @@ exception messages, or error tracebacks.
 """
 
 from __future__ import annotations
+
 import json
-import io
 from pathlib import Path
 
 import pytest
 
-from envsentry.models import EnvVariable, ParsedEnvFile, ValidationFinding, AuditResult
-from envsentry.config import SchemaVariable
 from envsentry import validators
-from envsentry.reporters.terminal import TerminalReporter
+from envsentry.config import SchemaVariable
+from envsentry.models import AuditResult, EnvVariable, ParsedEnvFile, ValidationFinding
 from envsentry.reporters.json import JSONReporter
-
+from envsentry.reporters.terminal import TerminalReporter
 
 # Test secrets that should NEVER appear in output
 TEST_SECRET_1 = "SUPER_SECRET_KEY_12345"

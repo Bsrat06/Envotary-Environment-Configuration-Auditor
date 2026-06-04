@@ -1,7 +1,5 @@
 """Tests for discovery module."""
 
-from pathlib import Path
-import pytest
 
 from envsentry.discovery import discover_files
 

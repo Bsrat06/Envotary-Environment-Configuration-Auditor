@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-import pytest
 from pathlib import Path
 
-from envsentry.parser import parse_dotenv_file, ParseError
-from envsentry.models import EnvVariable, ParsedEnvFile
+import pytest
+
+from envsentry.parser import ParseError, parse_dotenv_file
 
 
 def test_parse_basic_key_value(tmp_path: Path) -> None:

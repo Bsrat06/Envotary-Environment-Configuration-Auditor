@@ -5,17 +5,16 @@ including scan and init commands.
 """
 
 from __future__ import annotations
+
 from pathlib import Path
-import sys
 
 import typer
 from rich.console import Console
 
 from envsentry.engine import run_audit
-from envsentry.reporters.terminal import TerminalReporter
+from envsentry.exit_codes import EXIT_AUDIT_FAILED, EXIT_ERROR, EXIT_SUCCESS
 from envsentry.reporters.json import JSONReporter
-from envsentry.exit_codes import EXIT_SUCCESS, EXIT_AUDIT_FAILED, EXIT_ERROR
-
+from envsentry.reporters.terminal import TerminalReporter
 
 app = typer.Typer(
     name="envsentry",

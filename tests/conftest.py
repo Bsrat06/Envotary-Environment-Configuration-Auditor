@@ -1,13 +1,14 @@
 """Pytest configuration and shared fixtures for EnvSentry tests."""
 
 from __future__ import annotations
+
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 
 import pytest
 
-from envsentry.models import EnvVariable, ParsedEnvFile, ValidationFinding, AuditResult
 from envsentry.config import SchemaVariable
+from envsentry.models import AuditResult, EnvVariable, ParsedEnvFile, ValidationFinding
 
 
 @pytest.fixture

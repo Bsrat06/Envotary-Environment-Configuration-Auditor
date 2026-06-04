@@ -1,0 +1,38 @@
+[project]
+name = "django-example"
+description = "Django project example with typical Django environment variables"
+
+[files]
+env_file = ".env"
+example_file = ".env.example"
+
+[settings]
+require_example_file = true
+allow_extra_variables = false
+
+[variables.SECRET_KEY]
+type = "string"
+required = true
+secret = true
+min_length = 50
+
+[variables.DEBUG]
+type = "boolean"
+required = true
+
+[variables.DATABASE_URL]
+type = "url"
+required = true
+secret = true
+
+[variables.ALLOWED_HOSTS]
+type = "string"
+required = true
+
+[variables.STATIC_ROOT]
+type = "string"
+required = false
+
+[variables.MEDIA_ROOT]
+type = "string"
+required = false
