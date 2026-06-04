@@ -1,7 +1,7 @@
 """Tests for audit engine."""
 
 
-from envsentry.engine import run_audit
+from envotary.engine import run_audit
 
 
 def test_run_audit_no_files(tmp_path):
@@ -49,13 +49,13 @@ def test_run_audit_missing_required(tmp_path):
 
 
 def test_run_audit_with_config_file(tmp_path):
-    """Test audit using .envsentry.toml configuration."""
+    """Test audit using .envotary.toml configuration."""
     # Create .env file
     env_file = tmp_path / ".env"
     env_file.write_text("PORT=8080\n")
 
     # Create config file
-    config_file = tmp_path / ".envsentry.toml"
+    config_file = tmp_path / ".envotary.toml"
     config_file.write_text("""
 [variables.PORT]
 required = true
@@ -77,7 +77,7 @@ def test_run_audit_type_error(tmp_path):
     env_file.write_text("PORT=not-a-number\n")
 
     # Create config file
-    config_file = tmp_path / ".envsentry.toml"
+    config_file = tmp_path / ".envotary.toml"
     config_file.write_text("""
 [variables.PORT]
 type = "integer"
@@ -122,7 +122,7 @@ def test_run_audit_invalid_config(tmp_path):
     env_file.write_text("VAR1=value1\n")
 
     # Create invalid config
-    config_file = tmp_path / ".envsentry.toml"
+    config_file = tmp_path / ".envotary.toml"
     config_file.write_text("invalid toml content [[[\n")
 
     result = run_audit(tmp_path)
@@ -164,7 +164,7 @@ SHORT_VAR=ab
 """)
 
     # Create config
-    config_file = tmp_path / ".envsentry.toml"
+    config_file = tmp_path / ".envotary.toml"
     config_file.write_text("""
 [variables.PORT]
 type = "integer"

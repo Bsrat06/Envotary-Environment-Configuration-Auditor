@@ -2,8 +2,8 @@
 
 import pytest
 
-from envsentry.config import infer_schema_from_example, load_config
-from envsentry.models import EnvVariable, ParsedEnvFile
+from envotary.config import infer_schema_from_example, load_config
+from envotary.models import EnvVariable, ParsedEnvFile
 
 
 def test_load_config_nonexistent(tmp_path):
@@ -21,7 +21,7 @@ def test_load_config_none():
 
 def test_load_config_basic(tmp_path):
     """Test loading basic config with required variable."""
-    config_path = tmp_path / ".envsentry.toml"
+    config_path = tmp_path / ".envotary.toml"
     config_path.write_text("""
 [variables.DATABASE_URL]
 required = true
@@ -40,7 +40,7 @@ secret = true
 
 def test_load_config_all_constraints(tmp_path):
     """Test loading config with all constraint types."""
-    config_path = tmp_path / ".envsentry.toml"
+    config_path = tmp_path / ".envotary.toml"
     config_path.write_text("""
 [variables.API_KEY]
 required = true
@@ -87,7 +87,7 @@ choices = ["development", "staging", "production"]
 
 def test_load_config_defaults(tmp_path):
     """Test that config uses correct defaults."""
-    config_path = tmp_path / ".envsentry.toml"
+    config_path = tmp_path / ".envotary.toml"
     config_path.write_text("""
 [variables.SIMPLE_VAR]
 """)
@@ -104,7 +104,7 @@ def test_load_config_defaults(tmp_path):
 
 def test_load_config_invalid_toml(tmp_path):
     """Test loading invalid TOML."""
-    config_path = tmp_path / ".envsentry.toml"
+    config_path = tmp_path / ".envotary.toml"
     config_path.write_text("""
 [variables.BAD
 this is not valid TOML
@@ -116,7 +116,7 @@ this is not valid TOML
 
 def test_load_config_unknown_property(tmp_path):
     """Test loading config with unknown property."""
-    config_path = tmp_path / ".envsentry.toml"
+    config_path = tmp_path / ".envotary.toml"
     config_path.write_text("""
 [variables.VAR1]
 required = true
@@ -129,7 +129,7 @@ unknown_property = "value"
 
 def test_load_config_invalid_variables_section(tmp_path):
     """Test loading config with non-table variables section."""
-    config_path = tmp_path / ".envsentry.toml"
+    config_path = tmp_path / ".envotary.toml"
     config_path.write_text("""
 variables = "not a table"
 """)

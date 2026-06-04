@@ -1,4 +1,4 @@
-"""Edge case and error handling tests for EnvSentry.
+"""Edge case and error handling tests for Envotary.
 
 Tests malformed files, missing files, invalid configurations, path handling,
 and other error conditions.
@@ -11,9 +11,9 @@ from pathlib import Path
 
 import pytest
 
-from envsentry.config import load_config
-from envsentry.discovery import discover_files
-from envsentry.parser import parse_dotenv_file
+from envotary.config import load_config
+from envotary.discovery import discover_files
+from envotary.parser import parse_dotenv_file
 
 
 class TestParseErrors:
@@ -44,7 +44,7 @@ class TestParseErrors:
             assert parsed.path == str(env_file.absolute())
         except Exception as e:
             # If it fails, ensure clean error handling (including ParseError)
-            from envsentry.parser import ParseError
+            from envotary.parser import ParseError
             assert isinstance(e, (UnicodeDecodeError, ValueError, ParseError))
 
     def test_parse_malformed_syntax(self, tmp_path: Path) -> None:
@@ -115,7 +115,7 @@ class TestFileErrors:
         directory.mkdir()
 
         # Should raise ParseError for directory
-        from envsentry.parser import ParseError
+        from envotary.parser import ParseError
         with pytest.raises(ParseError):
             parse_dotenv_file(directory)
 
@@ -174,7 +174,7 @@ class TestConfigErrors:
 
     def test_load_invalid_toml_syntax(self, tmp_path: Path) -> None:
         """Test loading config with invalid TOML syntax."""
-        config_file = tmp_path / ".envsentry.toml"
+        config_file = tmp_path / ".envotary.toml"
         config_file.write_text(
             """
 [variables]
@@ -189,7 +189,7 @@ VAR1 = {
 
     def test_load_unknown_schema_properties(self, tmp_path: Path) -> None:
         """Test config with unknown schema properties."""
-        config_file = tmp_path / ".envsentry.toml"
+        config_file = tmp_path / ".envotary.toml"
         config_file.write_text(
             """
 [variables.VAR1]
@@ -206,7 +206,7 @@ another_unknown = 123
 
     def test_load_invalid_type_values(self, tmp_path: Path) -> None:
         """Test config with invalid type values."""
-        config_file = tmp_path / ".envsentry.toml"
+        config_file = tmp_path / ".envotary.toml"
         config_file.write_text(
             """
 [variables.VAR1]
@@ -222,7 +222,7 @@ required = true
 
     def test_load_contradictory_constraints(self, tmp_path: Path) -> None:
         """Test config with contradictory constraints (min > max)."""
-        config_file = tmp_path / ".envsentry.toml"
+        config_file = tmp_path / ".envotary.toml"
         config_file.write_text(
             """
 [variables.VAR1]
@@ -240,7 +240,7 @@ max = 10
 
     def test_load_invalid_choice_type(self, tmp_path: Path) -> None:
         """Test config with invalid choices type."""
-        config_file = tmp_path / ".envsentry.toml"
+        config_file = tmp_path / ".envotary.toml"
         config_file.write_text(
             """
 [variables.VAR1]
@@ -256,10 +256,10 @@ choices = "not_a_list"
         assert config["VAR1"].choices == "not_a_list"
 
     def test_load_missing_config_file(self, tmp_path: Path) -> None:
-        """Test loading config when .envsentry.toml doesn't exist."""
+        """Test loading config when .envotary.toml doesn't exist."""
         empty_dir = tmp_path / "no_config"
         empty_dir.mkdir()
-        config_file = empty_dir / ".envsentry.toml"
+        config_file = empty_dir / ".envotary.toml"
 
         # Should raise FileNotFoundError for non-existent file
         with pytest.raises(FileNotFoundError):

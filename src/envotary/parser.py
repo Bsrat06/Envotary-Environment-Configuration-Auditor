@@ -1,4 +1,4 @@
-"""Dotenv file parser for EnvSentry.
+"""Dotenv file parser for Envotary.
 
 This module provides functionality to parse .env files and extract environment
 variable definitions with line tracking and duplicate detection.
@@ -19,7 +19,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from envsentry.models import EnvVariable, ParsedEnvFile
+from envotary.models import EnvVariable, ParsedEnvFile
 
 
 class ParseError(Exception):

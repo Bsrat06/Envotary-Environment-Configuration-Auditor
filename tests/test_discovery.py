@@ -1,7 +1,7 @@
 """Tests for discovery module."""
 
 
-from envsentry.discovery import discover_files
+from envotary.discovery import discover_files
 
 
 def test_discover_all_files(tmp_path):
@@ -9,13 +9,13 @@ def test_discover_all_files(tmp_path):
     # Create files
     (tmp_path / ".env").touch()
     (tmp_path / ".env.example").touch()
-    (tmp_path / ".envsentry.toml").touch()
+    (tmp_path / ".envotary.toml").touch()
 
     result = discover_files(tmp_path)
 
     assert result["env_file"] == tmp_path / ".env"
     assert result["example_file"] == tmp_path / ".env.example"
-    assert result["config_file"] == tmp_path / ".envsentry.toml"
+    assert result["config_file"] == tmp_path / ".envotary.toml"
 
 
 def test_discover_no_files(tmp_path):
@@ -30,13 +30,13 @@ def test_discover_no_files(tmp_path):
 def test_discover_partial_files(tmp_path):
     """Test discovery when only some files exist."""
     (tmp_path / ".env").touch()
-    (tmp_path / ".envsentry.toml").touch()
+    (tmp_path / ".envotary.toml").touch()
 
     result = discover_files(tmp_path)
 
     assert result["env_file"] == tmp_path / ".env"
     assert result["example_file"] is None
-    assert result["config_file"] == tmp_path / ".envsentry.toml"
+    assert result["config_file"] == tmp_path / ".envotary.toml"
 
 
 def test_explicit_env_file(tmp_path):

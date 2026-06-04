@@ -1,1 +1,1 @@
-"""Tests for EnvSentry."""
+"""Tests for Envotary."""

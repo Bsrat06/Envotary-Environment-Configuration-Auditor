@@ -1,4 +1,4 @@
-# EnvSentry Real-World Applicability Analysis
+# Envotary Real-World Applicability Analysis
 
 **Date**: 2026-11-14  
 **Version Analyzed**: 1.0.0  
@@ -10,7 +10,7 @@
 
 **Overall Assessment**: ✅ **Production Ready with Minor Improvements Needed**
 
-EnvSentry successfully delivers on its core value proposition: catching environment configuration problems before deployment. The tool is functional, secure, and provides clear actionable feedback. However, several UX improvements would significantly enhance real-world adoption.
+Envotary successfully delivers on its core value proposition: catching environment configuration problems before deployment. The tool is functional, secure, and provides clear actionable feedback. However, several UX improvements would significantly enhance real-world adoption.
 
 **Key Strengths**:
 - Core functionality works reliably
@@ -29,12 +29,12 @@ EnvSentry successfully delivers on its core value proposition: catching environm
 
 ## 1. Onboarding Experience
 
-### Test Scenario: New Developer Discovers EnvSentry
+### Test Scenario: New Developer Discovers Envotary
 
 **What We Tested**:
 ```bash
 # Step 1: Check version (COMMON first action)
-envsentry --version
+envotary --version
 ```
 
 **Result**: ❌ **FAILS**
@@ -50,8 +50,8 @@ No such option: --version
 @app.callback()
 def main(version: bool = typer.Option(False, "--version", "-v")):
     if version:
-        from envsentry import __version__
-        print(f"EnvSentry {__version__}")
+        from envotary import __version__
+        print(f"Envotary {__version__}")
         raise typer.Exit()
 ```
 
@@ -62,9 +62,9 @@ def main(version: bool = typer.Option(False, "--version", "-v")):
 **What We Tested**:
 ```bash
 cd my-project
-envsentry init
-# User examines .envsentry.toml
-envsentry scan
+envotary init
+# User examines .envotary.toml
+envotary scan
 ```
 
 **Result**: ✅ **WORKS**
@@ -79,7 +79,7 @@ envsentry scan
 
 **Recommendation**: Add `--from-example` flag:
 ```bash
-envsentry init --from-example .env.example
+envotary init --from-example .env.example
 # Auto-generates schema from existing .env.example
 ```
 
@@ -89,13 +89,13 @@ envsentry init --from-example .env.example
 
 ### Test: Automatic Schema Inference
 
-**What We Tested**: Create `.env.example`, run scan without `.envsentry.toml`
+**What We Tested**: Create `.env.example`, run scan without `.envotary.toml`
 
 **Result**: ✅ **WORKS PERFECTLY**
 ```bash
 # Created .env.example with 7 variables
 # Created .env with 6 matching + 1 extra
-envsentry scan
+envotary scan
 # Output: Detected missing API_KEY, flagged UNDOCUMENTED_VAR
 ```
 
@@ -104,7 +104,7 @@ envsentry scan
 2. No manual TOML creation needed
 3. Catches undocumented variables automatically
 
-**Gap**: Documentation doesn't emphasize this workflow enough. The README shows `.envsentry.toml` first, making users think it's required.
+**Gap**: Documentation doesn't emphasize this workflow enough. The README shows `.envotary.toml` first, making users think it's required.
 
 **Recommendation**: Update README quick-start:
 ```markdown
@@ -113,15 +113,15 @@ envsentry scan
 ### Option 1: Use Existing .env.example (Recommended)
 If you already have `.env.example`, you're done! Just run:
 ```bash
-envsentry scan
+envotary scan
 ```
 
 ### Option 2: Explicit Schema (Advanced)
 For type validation and constraints:
 ```bash
-envsentry init
-# Edit .envsentry.toml
-envsentry scan
+envotary init
+# Edit .envotary.toml
+envotary scan
 ```
 ```
 
@@ -168,7 +168,7 @@ Errors:
 **Result**: ✅ **WORKS WELL**
 
 ```bash
-envsentry scan --format json
+envotary scan --format json
 ```
 
 Output is:
@@ -182,21 +182,21 @@ Output is:
 # .github/workflows/env-check.yml
 - name: Audit Environment Config
   run: |
-    pip install envsentry
-    envsentry scan --format json > audit.json
+    pip install envotary
+    envotary scan --format json > audit.json
 - name: Upload Results
   if: failure()
   uses: actions/upload-artifact@v3
   with:
-    name: envsentry-audit
+    name: envotary-audit
     path: audit.json
 ```
 
 **Gap**: No built-in GitHub Actions action (like `actions/checkout`). Users must script it manually.
 
-**Optional Enhancement**: Create `envsentry-action`:
+**Optional Enhancement**: Create `envotary-action`:
 ```yaml
-- uses: envsentry/envsentry-action@v1
+- uses: envotary/envotary-action@v1
   with:
     path: './backend'
     fail-on: error  # or 'warning'
@@ -233,7 +233,7 @@ Output is:
 - Caught a missing Redis config that would cause runtime failure
 - Flagged an AWS key that wasn't in the example (team should decide if it belongs)
 
-**Limitation**: Didn't detect `SECRET_KEY` contains "change-this" placeholder - this would require adding `.envsentry.toml` with `min_length` constraint.
+**Limitation**: Didn't detect `SECRET_KEY` contains "change-this" placeholder - this would require adding `.envotary.toml` with `min_length` constraint.
 
 ---
 
@@ -245,7 +245,7 @@ Output is:
 1. Clone repo
 2. Copy `.env.example` to `.env`
 3. Fill in values
-4. Run `envsentry scan` before starting app
+4. Run `envotary scan` before starting app
 
 **Result**: ✅ **WORKS**
 - Catches missing required vars immediately
@@ -263,7 +263,7 @@ allow_empty = ["AWS_ACCESS_KEY", "STRIPE_KEY"]
 strict = true
 ```
 
-Then: `envsentry scan --env production`
+Then: `envotary scan --env production`
 
 ---
 
@@ -273,7 +273,7 @@ Then: `envsentry scan --env production`
 
 Created .env with 10,000 lines:
 ```bash
-time envsentry scan
+time envotary scan
 ```
 
 **Result**: ✅ **FAST**
@@ -333,12 +333,12 @@ Value `AKIAIOSFODNN7EXAMPLE` is NEVER shown in output. ✅
 ## Common Issues
 
 **Q: I get "Variable X is not documented" for all my variables**
-A: Either add a `.env.example` file, or run `envsentry init` to create explicit schema.
+A: Either add a `.env.example` file, or run `envotary init` to create explicit schema.
 
 **Q: How do I use this with Docker?**
 A: Run in your Dockerfile before CMD:
 ```dockerfile
-RUN pip install envsentry && envsentry scan --format json
+RUN pip install envotary && envotary scan --format json
 CMD ["python", "app.py"]
 ```
 
@@ -347,9 +347,9 @@ A: Yes! Add to `.pre-commit-config.yaml`:
 ```yaml
 - repo: local
   hooks:
-    - id: envsentry
-      name: EnvSentry Config Audit
-      entry: envsentry scan
+    - id: envotary
+      name: Envotary Config Audit
+      entry: envotary scan
       language: system
       pass_filenames: false
 ```
@@ -361,26 +361,26 @@ A: Yes! Add to `.pre-commit-config.yaml`:
 
 ### 1. Interactive Fix Mode
 ```bash
-envsentry scan --fix
+envotary scan --fix
 # Prompts: "SECRET_TOKEN is empty. Enter value: " [hidden input]
 # Updates .env automatically
 ```
 
 ### 2. Diff Mode for Multiple Environments
 ```bash
-envsentry diff .env.staging .env.production
+envotary diff .env.staging .env.production
 # Shows which vars differ between environments
 ```
 
 ### 3. Export Schema
 ```bash
-envsentry schema --export openapi
+envotary schema --export openapi
 # Generates OpenAPI spec snippet for config
 ```
 
 ### 4. Watch Mode for Development
 ```bash
-envsentry watch
+envotary watch
 # Re-scans on .env file changes
 ```
 
@@ -390,7 +390,7 @@ envsentry watch
 
 ### Comparison with Alternatives
 
-| Tool | EnvSentry | dotenv-linter | envconsul |
+| Tool | Envotary | dotenv-linter | envconsul |
 |------|-----------|---------------|-----------|
 | **Type Validation** | ✅ Yes | ❌ No | ❌ No |
 | **Schema Definition** | ✅ TOML | ❌ None | ✅ HashiCorp |
@@ -400,7 +400,7 @@ envsentry watch
 | **Zero Config** | ✅ Works with .env.example | ❌ Requires config | ❌ Requires Vault |
 | **Learning Curve** | ⭐⭐ Low | ⭐ Very Low | ⭐⭐⭐⭐ High |
 
-**EnvSentry's Unique Value**: Only tool that combines:
+**Envotary's Unique Value**: Only tool that combines:
 1. Type validation
 2. Zero-config workflow
 3. Guaranteed secret safety
@@ -411,7 +411,7 @@ envsentry watch
 ## 12. Adoption Barriers
 
 ### Low Barriers ✅
-1. **Installation**: Single `pip install envsentry`
+1. **Installation**: Single `pip install envotary`
 2. **Learning curve**: Can start with zero config
 3. **Team buy-in**: Exit codes make CI integration obvious
 4. **Performance**: Sub-second scans
@@ -441,19 +441,19 @@ envsentry watch
 
 1. **Monorepos** - Need to run per service:
    ```bash
-   envsentry scan --path ./services/api
-   envsentry scan --path ./services/worker
+   envotary scan --path ./services/api
+   envotary scan --path ./services/worker
    ```
 
 2. **Kubernetes ConfigMaps** - Need to export to .env first:
    ```bash
    kubectl get configmap myapp -o yaml | yq '.data' > .env
-   envsentry scan
+   envotary scan
    ```
 
 ### ❌ Not Designed For:
 
-1. **Runtime config validation** - EnvSentry is pre-deployment only
+1. **Runtime config validation** - Envotary is pre-deployment only
 2. **Secret rotation** - Not a secret manager
 3. **Dynamic configuration** - Checks static files only
 
@@ -467,7 +467,7 @@ envsentry watch
 3. ✅ Clarify zero-config workflow in docs
 
 ### Medium Priority (UX Improvements)
-4. ⚠️ Add `envsentry init --from-example`
+4. ⚠️ Add `envotary init --from-example`
 5. ⚠️ Add troubleshooting section to README
 6. ⚠️ Add pre-commit hook example to docs
 
@@ -480,9 +480,9 @@ envsentry watch
 
 ## 15. Final Verdict
 
-### Is EnvSentry Really Usable?
+### Is Envotary Really Usable?
 
-**YES** ✅ - EnvSentry v1.0 is production-ready and solves a real problem effectively.
+**YES** ✅ - Envotary v1.0 is production-ready and solves a real problem effectively.
 
 **Evidence**:
 - Core functionality is solid
@@ -509,31 +509,31 @@ envsentry watch
 
 ### Session 1: Fresh Install
 ```bash
-pip install envsentry
-envsentry --version  # FAILED - no flag
-envsentry --help     # WORKED
-envsentry init       # WORKED - created .envsentry.toml
-envsentry scan       # WORKED - warned about missing .env
+pip install envotary
+envotary --version  # FAILED - no flag
+envotary --help     # WORKED
+envotary init       # WORKED - created .envotary.toml
+envotary scan       # WORKED - warned about missing .env
 ```
 
 ### Session 2: Schema Inference
 ```bash
 # Created .env.example with 7 vars
 # Created .env with 6 vars + 1 extra
-envsentry scan       # WORKED - detected missing var and extra var
+envotary scan       # WORKED - detected missing var and extra var
 ```
 
 ### Session 3: Type Validation
 ```bash
-# Added .envsentry.toml with type constraints
+# Added .envotary.toml with type constraints
 # Set DEBUG=maybe (invalid boolean)
 # Set PORT=abc (invalid integer)
-envsentry scan       # WORKED - detected all type mismatches
+envotary scan       # WORKED - detected all type mismatches
 ```
 
 ### Session 4: JSON Output
 ```bash
-envsentry scan --format json > results.json
+envotary scan --format json > results.json
 python -m json.tool results.json  # WORKED - valid JSON
 echo $?                            # Returns 1 (correct exit code)
 ```
@@ -541,7 +541,7 @@ echo $?                            # Returns 1 (correct exit code)
 ### Session 5: Real Django Project
 ```bash
 # Simulated typical Django .env setup
-envsentry scan       # WORKED - caught missing REDIS_URL
+envotary scan       # WORKED - caught missing REDIS_URL
 ```
 
 ---

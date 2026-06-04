@@ -1,4 +1,4 @@
-"""Pytest configuration and shared fixtures for EnvSentry tests."""
+"""Pytest configuration and shared fixtures for Envotary tests."""
 
 from __future__ import annotations
 
@@ -7,8 +7,8 @@ from pathlib import Path
 
 import pytest
 
-from envsentry.config import SchemaVariable
-from envsentry.models import AuditResult, EnvVariable, ParsedEnvFile, ValidationFinding
+from envotary.config import SchemaVariable
+from envotary.models import AuditResult, EnvVariable, ParsedEnvFile, ValidationFinding
 
 
 @pytest.fixture

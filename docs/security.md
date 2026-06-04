@@ -1,6 +1,6 @@
 # Security Documentation
 
-EnvSentry is designed with security as the top priority. This document details the security guarantees, threat model, and verification methods.
+Envotary is designed with security as the top priority. This document details the security guarantees, threat model, and verification methods.
 
 ## Table of Contents
 
@@ -13,7 +13,7 @@ EnvSentry is designed with security as the top priority. This document details t
 
 ## Security Guarantees
 
-EnvSentry provides the following security guarantees:
+Envotary provides the following security guarantees:
 
 ### 1. Never Prints Secret Values
 
@@ -50,7 +50,7 @@ When using `--format json`, secret variables appear with `"value": "[REDACTED]"`
 
 ### 3. No Network Requests
 
-**Guarantee**: EnvSentry never makes network connections.
+**Guarantee**: Envotary never makes network connections.
 
 All validation is performed locally:
 - No telemetry or analytics
@@ -60,16 +60,16 @@ All validation is performed locally:
 
 ### 4. No File Modifications
 
-**Guarantee**: EnvSentry is read-only and never modifies scanned files.
+**Guarantee**: Envotary is read-only and never modifies scanned files.
 
-- Only reads `.env`, `.env.example`, and `.envsentry.toml`
+- Only reads `.env`, `.env.example`, and `.envotary.toml`
 - Never writes to configuration or environment files
 - Never creates backup files
 - Never modifies file permissions or timestamps
 
 ### 5. No Code Execution
 
-**Guarantee**: EnvSentry never executes code from scanned projects.
+**Guarantee**: Envotary never executes code from scanned projects.
 
 - Does not run shell commands
 - Does not evaluate expressions in `.env` files
@@ -78,7 +78,7 @@ All validation is performed locally:
 
 ### 6. No Shell Commands
 
-**Guarantee**: EnvSentry never invokes shell commands or subprocesses.
+**Guarantee**: Envotary never invokes shell commands or subprocesses.
 
 - No calls to `subprocess`, `os.system`, `exec`, or similar
 - No shell expansion or variable interpolation
@@ -96,8 +96,8 @@ All validation is performed locally:
 
 **Guarantee**: Configuration files are never modified.
 
-- `.envsentry.toml` is read-only
-- `envsentry init` creates new file but never overwrites existing
+- `.envotary.toml` is read-only
+- `envotary init` creates new file but never overwrites existing
 - No automatic schema updates or migrations
 
 ### 9. No Secrets in Exceptions
@@ -152,9 +152,9 @@ ENV007: Parse error: could not parse "postgresql://user:secret_password@..."
 
 ## Threat Model
 
-### What EnvSentry Protects Against
+### What Envotary Protects Against
 
-EnvSentry is designed to catch configuration errors during development and in CI pipelines:
+Envotary is designed to catch configuration errors during development and in CI pipelines:
 
 ✅ **Missing required variables** - Catches before deployment  
 ✅ **Type mismatches** - Prevents runtime type errors  
@@ -163,7 +163,7 @@ EnvSentry is designed to catch configuration errors during development and in CI
 ✅ **Constraint violations** - Enforces length, range, and choice constraints  
 ✅ **Configuration drift** - Detects variables not in schema  
 
-### What EnvSentry Does NOT Protect Against
+### What Envotary Does NOT Protect Against
 
 ❌ **Secret exposure in git history** - Use git-secrets, truffleHog, or similar tools  
 ❌ **Secret exposure in logs** - Application must sanitize logs  
@@ -175,7 +175,7 @@ EnvSentry is designed to catch configuration errors during development and in CI
 
 ### Intended Use Cases
 
-EnvSentry is intended for:
+Envotary is intended for:
 
 - Local development environment validation
 - Pre-commit hooks in development
@@ -185,7 +185,7 @@ EnvSentry is intended for:
 
 ### NOT Intended For
 
-EnvSentry is NOT intended for:
+Envotary is NOT intended for:
 
 - Production secret scanning (use vault solutions like HashiCorp Vault)
 - Continuous security monitoring (use SIEM tools)
@@ -214,7 +214,7 @@ Redaction is applied:
 
 ### Type Safety
 
-EnvSentry uses Python type hints throughout:
+Envotary uses Python type hints throughout:
 
 ```python
 from dataclasses import dataclass
@@ -237,7 +237,7 @@ Type checking with `mypy` ensures:
 All external input is validated:
 
 - `.env` files are parsed with error handling
-- `.envsentry.toml` is validated against schema
+- `.envotary.toml` is validated against schema
 - File paths are sanitized and validated
 - User input is validated before processing
 
@@ -254,12 +254,12 @@ Security-conscious defaults:
 
 ### How to Verify Security Guarantees
 
-EnvSentry includes comprehensive security tests in `tests/test_security.py`.
+Envotary includes comprehensive security tests in `tests/test_security.py`.
 
 #### Run Security Tests
 
 ```bash
-cd /path/to/envsentry
+cd /path/to/envotary
 python -m pytest tests/test_security.py -v
 ```
 
@@ -307,7 +307,7 @@ SECRET_API_KEY=my-actual-secret-value
 Configure as secret:
 
 ```toml
-# test/.envsentry.toml
+# test/.envotary.toml
 [variables.SECRET_API_KEY]
 type = "string"
 required = true
@@ -317,8 +317,8 @@ secret = true
 Run scan and verify output never contains `my-actual-secret-value`:
 
 ```bash
-envsentry scan --path test/
-envsentry scan --path test/ --format json
+envotary scan --path test/
+envotary scan --path test/ --format json
 ```
 
 #### 2. Test Network Isolation
@@ -326,7 +326,7 @@ envsentry scan --path test/ --format json
 Monitor network with Wireshark or similar while running:
 
 ```bash
-envsentry scan
+envotary scan
 ```
 
 Verify no network packets are sent.
@@ -336,8 +336,8 @@ Verify no network packets are sent.
 Make files read-only and verify scan still works:
 
 ```bash
-chmod 444 .env .envsentry.toml
-envsentry scan
+chmod 444 .env .envotary.toml
+envotary scan
 ```
 
 Monitor filesystem with `strace` (Linux) or Process Monitor (Windows) to verify no write operations.
@@ -366,10 +366,10 @@ Monitor filesystem with `strace` (Linux) or Process Monitor (Windows) to verify 
    DATABASE_URL=postgresql://user:password@localhost:5432/dbname
    ```
 
-4. **Run EnvSentry in CI**
+4. **Run Envotary in CI**
    ```yaml
    - name: Audit environment configuration
-     run: envsentry scan --strict
+     run: envotary scan --strict
    ```
 
 5. **Review warnings carefully**
@@ -377,7 +377,7 @@ Monitor filesystem with `strace` (Linux) or Process Monitor (Windows) to verify 
    - False positives should be documented
 
 6. **Use proper secret management in production**
-   - EnvSentry validates config structure
+   - Envotary validates config structure
    - Use Vault, AWS Secrets Manager, etc. for runtime secrets
 
 ### For Contributors
@@ -424,7 +424,7 @@ We recognize security researchers who responsibly disclose vulnerabilities:
 
 ## Compliance
 
-EnvSentry is designed to support security compliance but is not a compliance tool:
+Envotary is designed to support security compliance but is not a compliance tool:
 
 - **PCI DSS**: Helps prevent credential exposure (not sufficient alone)
 - **SOC 2**: Demonstrates configuration validation (not sufficient alone)

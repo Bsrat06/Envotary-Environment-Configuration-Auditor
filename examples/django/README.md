@@ -1,12 +1,12 @@
 # Django Example
 
-This example demonstrates EnvSentry configuration for a typical Django project.
+This example demonstrates Envotary configuration for a typical Django project.
 
 ## Files
 
 - `.env.example` - Template for Django environment variables
 - `.env` - Actual environment file (contains one intentional issue for demonstration)
-- `.envsentry.toml` - Django-specific validation rules
+- `.envotary.toml` - Django-specific validation rules
 
 ## Variables
 
@@ -17,12 +17,12 @@ This example demonstrates EnvSentry configuration for a typical Django project.
 - `STATIC_ROOT` - Optional path for static files
 - `MEDIA_ROOT` - Optional path for media files
 
-## Running EnvSentry
+## Running Envotary
 
 From the repository root:
 
 ```bash
-envsentry scan --path examples/django
+envotary scan --path examples/django
 ```
 
 This example includes an intentionally short SECRET_KEY in `.env` to demonstrate validation failures.

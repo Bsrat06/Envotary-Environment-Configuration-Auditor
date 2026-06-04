@@ -1,6 +1,6 @@
-"""Configuration and schema loading for EnvSentry.
+"""Configuration and schema loading for Envotary.
 
-This module handles parsing .envsentry.toml configuration files and
+This module handles parsing .envotary.toml configuration files and
 inferring schemas from .env.example files.
 """
 
@@ -15,7 +15,7 @@ if sys.version_info >= (3, 11):
 else:
     import tomli as tomllib
 
-from envsentry.models import ParsedEnvFile
+from envotary.models import ParsedEnvFile
 
 
 @dataclass
@@ -44,10 +44,10 @@ class SchemaVariable:
 
 
 def load_config(config_path: Path | None) -> dict[str, SchemaVariable]:
-    """Load schema configuration from .envsentry.toml file.
+    """Load schema configuration from .envotary.toml file.
 
     Args:
-        config_path: Path to .envsentry.toml file, or None if no config exists.
+        config_path: Path to .envotary.toml file, or None if no config exists.
 
     Returns:
         Dictionary mapping variable names to SchemaVariable objects.

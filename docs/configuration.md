@@ -1,6 +1,6 @@
 # Configuration Reference
 
-EnvSentry uses a `.envsentry.toml` configuration file to define validation rules for environment variables.
+Envotary uses a `.envotary.toml` configuration file to define validation rules for environment variables.
 
 ## Table of Contents
 
@@ -16,19 +16,19 @@ EnvSentry uses a `.envsentry.toml` configuration file to define validation rules
 
 ## Configuration File Location
 
-By default, EnvSentry looks for `.envsentry.toml` in:
+By default, Envotary looks for `.envotary.toml` in:
 1. Current directory
 2. Project root (directory containing `.git`)
 
 You can specify a custom configuration file:
 
 ```bash
-envsentry scan --config /path/to/config.toml
+envotary scan --config /path/to/config.toml
 ```
 
 ## Configuration Sections
 
-A complete `.envsentry.toml` file has four main sections:
+A complete `.envotary.toml` file has four main sections:
 
 ```toml
 [project]          # Project metadata
@@ -494,10 +494,10 @@ required = false
 
 ## Schema Inference
 
-If no `.envsentry.toml` exists, EnvSentry can infer a basic schema from `.env.example`:
+If no `.envotary.toml` exists, Envotary can infer a basic schema from `.env.example`:
 
 ```bash
-envsentry init
+envotary init
 ```
 
 This creates a starter configuration with:
@@ -531,10 +531,10 @@ You should review and customize the generated configuration to add:
 Error: Configuration file not found
 ```
 
-**Solution**: Create `.envsentry.toml` or use `--config` flag:
+**Solution**: Create `.envotary.toml` or use `--config` flag:
 
 ```bash
-envsentry scan --config /path/to/config.toml
+envotary scan --config /path/to/config.toml
 ```
 
 ### Invalid TOML syntax

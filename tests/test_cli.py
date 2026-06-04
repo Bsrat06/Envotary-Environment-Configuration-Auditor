@@ -1,4 +1,4 @@
-"""Tests for EnvSentry CLI commands."""
+"""Tests for Envotary CLI commands."""
 
 from __future__ import annotations
 
@@ -8,8 +8,8 @@ from pathlib import Path
 import pytest
 from typer.testing import CliRunner
 
-from envsentry.cli import app
-from envsentry.exit_codes import EXIT_AUDIT_FAILED, EXIT_ERROR, EXIT_SUCCESS
+from envotary.cli import app
+from envotary.exit_codes import EXIT_AUDIT_FAILED, EXIT_ERROR, EXIT_SUCCESS
 
 
 @pytest.fixture
@@ -77,7 +77,7 @@ def test_cli_help(cli_runner: CliRunner) -> None:
     """Test that --help displays useful information."""
     result = cli_runner.invoke(app, ["--help"])
     assert result.exit_code == 0
-    assert "envsentry" in result.stdout.lower()
+    assert "envotary" in result.stdout.lower()
     assert "scan" in result.stdout
     assert "init" in result.stdout
 
@@ -104,7 +104,7 @@ def test_scan_valid_project(cli_runner: CliRunner, sample_project: Path) -> None
     """Test scan command with valid project returns exit code 0."""
     result = cli_runner.invoke(app, ["scan", "--path", str(sample_project)])
     assert result.exit_code == EXIT_SUCCESS
-    assert "EnvSentry Security Audit" in result.stdout
+    assert "Envotary Security Audit" in result.stdout
     # Path may be wrapped/split by Rich, just check project name is in output
     assert "test_project" in result.stdout
 
@@ -169,7 +169,7 @@ def test_scan_with_explicit_env_file(cli_runner: CliRunner, tmp_path: Path) -> N
 
 
 def test_init_creates_config(cli_runner: CliRunner, tmp_path: Path) -> None:
-    """Test init command creates .envsentry.toml file."""
+    """Test init command creates .envotary.toml file."""
     project_dir = tmp_path / "new_project"
     project_dir.mkdir()
 
@@ -177,24 +177,24 @@ def test_init_creates_config(cli_runner: CliRunner, tmp_path: Path) -> None:
     assert result.exit_code == EXIT_SUCCESS
 
     # Check file was created
-    config_file = project_dir / ".envsentry.toml"
+    config_file = project_dir / ".envotary.toml"
     assert config_file.exists()
 
     # Check file has useful content
     content = config_file.read_text()
-    assert "EnvSentry Configuration File" in content
+    assert "Envotary Configuration File" in content
     assert "[variables." in content
     assert "required" in content
     assert "type" in content
 
 
 def test_init_refuses_to_overwrite(cli_runner: CliRunner, tmp_path: Path) -> None:
-    """Test init command refuses to overwrite existing .envsentry.toml."""
+    """Test init command refuses to overwrite existing .envotary.toml."""
     project_dir = tmp_path / "existing_project"
     project_dir.mkdir()
 
     # Create existing config
-    config_file = project_dir / ".envsentry.toml"
+    config_file = project_dir / ".envotary.toml"
     config_file.write_text("# Existing config\n")
 
     result = cli_runner.invoke(app, ["init", "--path", str(project_dir)])
@@ -217,7 +217,7 @@ def test_scan_terminal_format_explicit(cli_runner: CliRunner, sample_project: Pa
     """Test scan command with explicit terminal format."""
     result = cli_runner.invoke(app, ["scan", "--path", str(sample_project), "--format", "terminal"])
     assert result.exit_code == EXIT_SUCCESS
-    assert "EnvSentry Security Audit" in result.stdout
+    assert "Envotary Security Audit" in result.stdout
 
 
 def test_scan_format_case_insensitive(cli_runner: CliRunner, sample_project: Path) -> None:
@@ -241,7 +241,7 @@ def test_init_default_path(cli_runner: CliRunner, tmp_path: Path, monkeypatch: p
     result = cli_runner.invoke(app, ["init"])
     assert result.exit_code == EXIT_SUCCESS
 
-    config_file = project_dir / ".envsentry.toml"
+    config_file = project_dir / ".envotary.toml"
     assert config_file.exists()
 
 

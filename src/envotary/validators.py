@@ -10,8 +10,8 @@ from __future__ import annotations
 import re
 from urllib.parse import urlparse
 
-from envsentry.config import SchemaVariable
-from envsentry.models import EnvVariable, ParsedEnvFile, ValidationFinding
+from envotary.config import SchemaVariable
+from envotary.models import EnvVariable, ParsedEnvFile, ValidationFinding
 
 
 def check_missing_required(
@@ -71,7 +71,7 @@ def check_undocumented(
                     file=env_var.file,
                     line=env_var.line_number,
                     message=f"Variable '{var_name}' is not documented in schema",
-                    remediation=f"Add '{var_name}' to .envsentry.toml or .env.example, or remove if unused",
+                    remediation=f"Add '{var_name}' to .envotary.toml or .env.example, or remove if unused",
                 )
             )
 

@@ -1,4 +1,4 @@
-# Valid EnvSentry configuration for testing
+# Valid Envotary configuration for testing
 
 [variables.DATABASE_URL]
 type = "url"

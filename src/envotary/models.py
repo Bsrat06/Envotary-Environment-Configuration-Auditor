@@ -1,4 +1,4 @@
-"""Data models for EnvSentry.
+"""Data models for Envotary.
 
 This module defines the core data structures used throughout the application
 for representing parsed environment variables, validation findings, and audit results.
@@ -68,7 +68,7 @@ class ValidationFinding:
 
 @dataclass
 class AuditResult:
-    """Represents the complete result of an EnvSentry audit run.
+    """Represents the complete result of an Envotary audit run.
 
     Attributes:
         project_path: Root path of the audited project.

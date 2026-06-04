@@ -1,7 +1,7 @@
 """Integration tests for complete audit workflows."""
 
 
-from envsentry.engine import run_audit
+from envotary.engine import run_audit
 
 
 def test_integration_valid_project(tmp_path):
@@ -26,8 +26,8 @@ PORT=8080
 ENVIRONMENT=development
 """)
 
-    # Create .envsentry.toml
-    (tmp_path / ".envsentry.toml").write_text("""
+    # Create .envotary.toml
+    (tmp_path / ".envotary.toml").write_text("""
 [variables.DATABASE_URL]
 required = true
 type = "url"
@@ -104,7 +104,7 @@ DATABASE_URL=not a url
 """)
 
     # Create config with type constraints
-    (tmp_path / ".envsentry.toml").write_text("""
+    (tmp_path / ".envotary.toml").write_text("""
 [variables.PORT]
 type = "integer"
 
@@ -144,7 +144,7 @@ NEGATIVE_VAL=-5
 """)
 
     # Create config with constraints
-    (tmp_path / ".envsentry.toml").write_text("""
+    (tmp_path / ".envotary.toml").write_text("""
 [variables.SHORT_KEY]
 min_length = 10
 
@@ -187,7 +187,7 @@ VALID_VAR=actual-real-value-12345
 """)
 
     # Create minimal config
-    (tmp_path / ".envsentry.toml").write_text("""
+    (tmp_path / ".envotary.toml").write_text("""
 [variables.API_KEY]
 [variables.DATABASE_URL]
 [variables.SECRET]
@@ -219,7 +219,7 @@ CREDIT_CARD=4532-1234-5678-9010
 """)
 
     # Create config that will trigger various errors
-    (tmp_path / ".envsentry.toml").write_text("""
+    (tmp_path / ".envotary.toml").write_text("""
 [variables.SECRET_KEY]
 secret = true
 type = "integer"
@@ -285,15 +285,15 @@ API_KEY=
 
 
 def test_integration_config_priority(tmp_path):
-    """Test that .envsentry.toml takes priority over .env.example."""
+    """Test that .envotary.toml takes priority over .env.example."""
     # Create .env
     (tmp_path / ".env").write_text("VAR1=value1\n")
 
     # Create .env.example (would infer VAR1 as required)
     (tmp_path / ".env.example").write_text("VAR1=\nVAR2=\n")
 
-    # Create .envsentry.toml (VAR2 is optional)
-    (tmp_path / ".envsentry.toml").write_text("""
+    # Create .envotary.toml (VAR2 is optional)
+    (tmp_path / ".envotary.toml").write_text("""
 [variables.VAR1]
 required = true
 

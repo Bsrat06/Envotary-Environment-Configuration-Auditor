@@ -1,4 +1,4 @@
-"""Exit codes for EnvSentry CLI.
+"""Exit codes for Envotary CLI.
 
 This module defines standard exit codes used throughout the application
 to communicate execution results to the shell and CI/CD systems.

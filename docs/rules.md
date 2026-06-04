@@ -1,6 +1,6 @@
 # Validation Rules Reference
 
-EnvSentry applies a comprehensive set of validation rules to ensure environment configurations are correct and secure. Each rule has a diagnostic code, severity level, and specific remediation guidance.
+Envotary applies a comprehensive set of validation rules to ensure environment configurations are correct and secure. Each rule has a diagnostic code, severity level, and specific remediation guidance.
 
 ## Table of Contents
 
@@ -33,12 +33,12 @@ EnvSentry applies a comprehensive set of validation rules to ensure environment 
 **Description**: A variable marked as `required = true` in the schema is not present in the `.env` file.
 
 **When Triggered**:
-- Variable defined in `.envsentry.toml` with `required = true`
+- Variable defined in `.envotary.toml` with `required = true`
 - Variable not found in `.env` file
 
 **Example**:
 
-`.envsentry.toml`:
+`.envotary.toml`:
 ```toml
 [variables.DATABASE_URL]
 type = "url"
@@ -105,7 +105,7 @@ Expected type: integer, got: 'not-a-number'
 
 **Remediation**:
 1. Provide a value matching the expected type
-2. Check type constraints in `.envsentry.toml`
+2. Check type constraints in `.envotary.toml`
 3. For booleans, use: `true`, `false`, `1`, `0`, `yes`, `no`, `on`, `off`
 
 **Rationale**: Type mismatches cause runtime errors or unexpected behavior. String "8000" vs integer 8000 can break port binding.
@@ -119,12 +119,12 @@ Expected type: integer, got: 'not-a-number'
 **Description**: A variable exists in `.env` but is not defined in the schema, and `allow_extra_variables = false`.
 
 **When Triggered**:
-- `.envsentry.toml` has `allow_extra_variables = false` in `[settings]`
+- `.envotary.toml` has `allow_extra_variables = false` in `[settings]`
 - Variable in `.env` has no corresponding `[variables.NAME]` section
 
 **Example**:
 
-`.envsentry.toml`:
+`.envotary.toml`:
 ```toml
 [settings]
 allow_extra_variables = false
@@ -143,12 +143,12 @@ TYPO_VARIABLE=value  # Not in schema
 ```
 ENV003: Unexpected variable 'TYPO_VARIABLE'
 Variable is not defined in schema
-→ Remove TYPO_VARIABLE or add it to .envsentry.toml
+→ Remove TYPO_VARIABLE or add it to .envotary.toml
 ```
 
 **Remediation**:
 1. Remove the variable from `.env` if it's unused
-2. Add the variable to `.envsentry.toml` if it's needed
+2. Add the variable to `.envotary.toml` if it's needed
 3. Check for typos in variable names
 4. Set `allow_extra_variables = true` if you want to allow undefined variables
 
@@ -233,7 +233,7 @@ ENV005: Invalid URL format for 'DATABASE_URL'
 
 **Rationale**: Invalid URLs cause connection failures. Catching syntax errors early prevents deployment issues.
 
-**Note**: EnvSentry validates URL syntax only. It does not verify that the URL is reachable or that the service exists.
+**Note**: Envotary validates URL syntax only. It does not verify that the URL is reachable or that the service exists.
 
 ---
 
@@ -249,7 +249,7 @@ ENV005: Invalid URL format for 'DATABASE_URL'
 
 **Example**:
 
-`.envsentry.toml`:
+`.envotary.toml`:
 ```toml
 [variables.ENVIRONMENT]
 type = "string"
@@ -270,7 +270,7 @@ Value 'dev' not in allowed choices: development, staging, production
 
 **Remediation**:
 1. Use one of the allowed values
-2. Update `choices` in `.envsentry.toml` if new values are needed
+2. Update `choices` in `.envotary.toml` if new values are needed
 3. Check for typos or case mismatches
 
 **Rationale**: Restricts values to known-good options. Prevents typos in environment names (prod vs production) that could cause logic errors.
@@ -471,7 +471,7 @@ ENV010: Variable 'PORT' value 80 is below minimum (1024)
 
 ## Placeholder Detection
 
-EnvSentry uses heuristic pattern matching to detect placeholder values.
+Envotary uses heuristic pattern matching to detect placeholder values.
 
 ### Detected Patterns
 
@@ -535,7 +535,7 @@ False positives are intentional - it's better to warn about a legitimate value t
 3. **Don't disable warnings**: Even false positives are valuable reminders to review configuration
 4. **Use strict validation in CI**: Set `allow_extra_variables = false` to catch all issues
 5. **Document exceptions**: If a warning is a known false positive, document why
-6. **Regular audits**: Run EnvSentry regularly to catch configuration drift
+6. **Regular audits**: Run Envotary regularly to catch configuration drift
 
 ## Additional Resources
 

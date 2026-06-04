@@ -1,12 +1,12 @@
 # Basic Example
 
-This is a minimal example demonstrating EnvSentry's core functionality.
+This is a minimal example demonstrating Envotary's core functionality.
 
 ## Files
 
 - `.env.example` - Template showing required environment variables
 - `.env` - Actual environment file with values
-- `.envsentry.toml` - Configuration defining validation rules
+- `.envotary.toml` - Configuration defining validation rules
 
 ## Variables
 
@@ -16,12 +16,12 @@ This is a minimal example demonstrating EnvSentry's core functionality.
 - `PORT` - Integer type with valid range 1024-65535
 - `ENVIRONMENT` - String type with allowed choices
 
-## Running EnvSentry
+## Running Envotary
 
 From the repository root:
 
 ```bash
-envsentry scan --path examples/basic
+envotary scan --path examples/basic
 ```
 
 This will validate that:

@@ -1,4 +1,4 @@
-"""Security-focused tests for EnvSentry.
+"""Security-focused tests for Envotary.
 
 This test suite verifies that actual environment variable values are NEVER exposed
 in any output channel: terminal reports, JSON reports, ValidationFinding objects,
@@ -12,11 +12,11 @@ from pathlib import Path
 
 import pytest
 
-from envsentry import validators
-from envsentry.config import SchemaVariable
-from envsentry.models import AuditResult, EnvVariable, ParsedEnvFile, ValidationFinding
-from envsentry.reporters.json import JSONReporter
-from envsentry.reporters.terminal import TerminalReporter
+from envotary import validators
+from envotary.config import SchemaVariable
+from envotary.models import AuditResult, EnvVariable, ParsedEnvFile, ValidationFinding
+from envotary.reporters.json import JSONReporter
+from envotary.reporters.terminal import TerminalReporter
 
 # Test secrets that should NEVER appear in output
 TEST_SECRET_1 = "SUPER_SECRET_KEY_12345"
@@ -159,7 +159,7 @@ def test_exception_messages_never_leak_secrets(tmp_path: Path) -> None:
     env_file.write_text(f"SECRET_KEY={TEST_SECRET_1}\nPASSWORD={TEST_SECRET_2}\n")
 
     # Import parser to test exception handling
-    from envsentry.parser import parse_dotenv_file
+    from envotary.parser import parse_dotenv_file
 
     # Parse the file (should succeed)
     parsed = parse_dotenv_file(env_file)

@@ -1,6 +1,6 @@
-# Contributing to EnvSentry
+# Contributing to Envotary
 
-Thank you for considering contributing to EnvSentry! This document provides guidelines for contributing to the project.
+Thank you for considering contributing to Envotary! This document provides guidelines for contributing to the project.
 
 ## Code of Conduct
 
@@ -15,8 +15,8 @@ Thank you for considering contributing to EnvSentry! This document provides guid
 1. **Fork and clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/envsentry.git
-cd envsentry
+git clone https://github.com/yourusername/envotary.git
+cd envotary
 ```
 
 2. **Create a virtual environment**
@@ -32,7 +32,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 python -m pip install -e .[dev]
 ```
 
-This installs EnvSentry in development mode along with:
+This installs Envotary in development mode along with:
 - `pytest` - Testing framework
 - `ruff` - Linting and formatting
 - `mypy` - Type checking
@@ -41,12 +41,12 @@ This installs EnvSentry in development mode along with:
 ### Project Structure
 
 ```
-envsentry/
-├── src/envsentry/          # Source code
+envotary/
+├── src/envotary/          # Source code
 │   ├── cli.py              # CLI entry point (Typer)
 │   ├── parser.py           # .env file parser
 │   ├── models.py           # Data models
-│   ├── config.py           # Configuration loading (.envsentry.toml)
+│   ├── config.py           # Configuration loading (.envotary.toml)
 │   ├── discovery.py        # File discovery
 │   ├── validators.py       # Validation rules
 │   ├── engine.py           # Audit engine
@@ -86,7 +86,7 @@ ruff format src/ tests/
 All code must include type hints. Use **mypy** for type checking:
 
 ```bash
-mypy src/envsentry
+mypy src/envotary
 ```
 
 ### 3. Running Tests
@@ -99,7 +99,7 @@ python -m pytest tests/ -v
 python -m pytest tests/test_parser.py -v
 
 # Run with coverage
-python -m pytest tests/ --cov=envsentry --cov-report=html
+python -m pytest tests/ --cov=envotary --cov-report=html
 
 # Run only security tests (these must always pass!)
 python -m pytest tests/test_security.py -v
@@ -128,7 +128,7 @@ git checkout -b feature/your-feature-name
 ```bash
 # All checks must pass before submitting PR
 ruff check src/ tests/
-mypy src/envsentry
+mypy src/envotary
 python -m pytest tests/ -v
 ```
 
@@ -155,7 +155,7 @@ git push origin feature/your-feature-name
 
 ## Security Requirements
 
-**CRITICAL**: EnvSentry is a security tool. All contributions must maintain security guarantees.
+**CRITICAL**: Envotary is a security tool. All contributions must maintain security guarantees.
 
 ### Security Checklist
 
@@ -250,8 +250,8 @@ Include:
 2. **Steps to Reproduce**: Minimal steps to reproduce the issue
 3. **Expected Behavior**: What you expected to happen
 4. **Actual Behavior**: What actually happened
-5. **Environment**: Python version, OS, EnvSentry version
-6. **Sample Files**: Minimal `.env` and `.envsentry.toml` to reproduce (no real secrets!)
+5. **Environment**: Python version, OS, Envotary version
+6. **Sample Files**: Minimal `.env` and `.envotary.toml` to reproduce (no real secrets!)
 
 ### Feature Requests
 
@@ -306,7 +306,7 @@ def test_feature_description():
 If you have questions about contributing:
 
 1. Check existing documentation
-2. Search [existing issues](https://github.com/yourusername/envsentry/issues)
+2. Search [existing issues](https://github.com/yourusername/envotary/issues)
 3. Open a new issue with the "question" label
 
 ## Recognition
@@ -316,4 +316,4 @@ Contributors will be recognized in:
 - Release notes
 - Project documentation (if significant contribution)
 
-Thank you for contributing to EnvSentry!
+Thank you for contributing to Envotary!

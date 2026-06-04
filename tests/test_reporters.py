@@ -1,4 +1,4 @@
-"""Tests for EnvSentry reporters (terminal and JSON)."""
+"""Tests for Envotary reporters (terminal and JSON)."""
 
 from __future__ import annotations
 
@@ -7,9 +7,9 @@ from datetime import datetime
 
 import pytest
 
-from envsentry.models import AuditResult, ValidationFinding
-from envsentry.reporters.json import JSONReporter
-from envsentry.reporters.terminal import TerminalReporter
+from envotary.models import AuditResult, ValidationFinding
+from envotary.reporters.json import JSONReporter
+from envotary.reporters.terminal import TerminalReporter
 
 
 def test_terminal_reporter_no_findings(capsys: pytest.CaptureFixture) -> None:
@@ -24,7 +24,7 @@ def test_terminal_reporter_no_findings(capsys: pytest.CaptureFixture) -> None:
     reporter.report(audit_result)
 
     captured = capsys.readouterr()
-    assert "EnvSentry Security Audit" in captured.out
+    assert "Envotary Security Audit" in captured.out
     assert "/test/project" in captured.out
     assert "No issues found" in captured.out
     assert "Audit passed" in captured.out
@@ -49,7 +49,7 @@ def test_terminal_reporter_with_findings(capsys: pytest.CaptureFixture) -> None:
             file="/test/.env",
             line=15,
             message="Variable is undocumented",
-            remediation="Add API_KEY to .env.example or .envsentry.toml",
+            remediation="Add API_KEY to .env.example or .envotary.toml",
         ),
     ]
 
@@ -66,7 +66,7 @@ def test_terminal_reporter_with_findings(capsys: pytest.CaptureFixture) -> None:
     output = captured.out
 
     # Check header
-    assert "EnvSentry Security Audit" in output
+    assert "Envotary Security Audit" in output
     assert "/test/project" in output
 
     # Check summary

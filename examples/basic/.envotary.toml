@@ -1,6 +1,6 @@
 [project]
 name = "basic-example"
-description = "Basic example project demonstrating EnvSentry configuration"
+description = "Basic example project demonstrating Envotary configuration"
 
 [files]
 env_file = ".env"

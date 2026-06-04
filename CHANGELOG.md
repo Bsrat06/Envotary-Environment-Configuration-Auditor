@@ -11,9 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Core Functionality
 - Environment configuration auditing CLI tool for detecting configuration problems before deployment
-- Support for `.env`, `.env.example`, and `.envsentry.toml` configuration files
+- Support for `.env`, `.env.example`, and `.envotary.toml` configuration files
 - Automatic schema discovery from `.env.example` files
-- Explicit schema definition via `.envsentry.toml` TOML configuration
+- Explicit schema definition via `.envotary.toml` TOML configuration
 
 #### Validation Rules
 - **ENV001**: Missing required variables detection
@@ -28,11 +28,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **ENV010**: Numeric constraint validation (min, max for integers and floats)
 
 #### CLI Commands
-- `envsentry scan` - Scan project directory for environment configuration issues
+- `envotary scan` - Scan project directory for environment configuration issues
   - `--path` option to specify target project directory
   - `--env-file` option to specify custom environment file path
   - `--format` option for output format (terminal or json)
-- `envsentry init` - Generate starter `.envsentry.toml` configuration file
+- `envotary init` - Generate starter `.envotary.toml` configuration file
 
 #### Reporters
 - **Terminal Reporter**: Professional Rich-based output with:
@@ -143,7 +143,7 @@ No unreleased changes.
 
 ### v1.0.0 - Initial Release
 
-EnvSentry v1.0.0 is the first stable release of this security-focused environment configuration auditing tool. It provides production-ready functionality for detecting configuration problems in `.env` files before they cause runtime failures.
+Envotary v1.0.0 is the first stable release of this security-focused environment configuration auditing tool. It provides production-ready functionality for detecting configuration problems in `.env` files before they cause runtime failures.
 
 **Key Features:**
 - 10+ validation rules with stable diagnostic codes
@@ -154,7 +154,7 @@ EnvSentry v1.0.0 is the first stable release of this security-focused environmen
 - CI-ready with proper exit codes
 
 **Security Focus:**
-EnvSentry is designed with security as a core principle. It never exposes actual environment variable values in any output, making it safe to use in CI/CD pipelines and team environments.
+Envotary is designed with security as a core principle. It never exposes actual environment variable values in any output, making it safe to use in CI/CD pipelines and team environments.
 
 **Use Cases:**
 - Pre-deployment configuration validation
@@ -165,9 +165,9 @@ EnvSentry is designed with security as a core principle. It never exposes actual
 
 **Getting Started:**
 ```bash
-pip install envsentry
+pip install envotary
 cd your-project
-envsentry scan
+envotary scan
 ```
 
 **Limitations:**
@@ -178,4 +178,4 @@ envsentry scan
 
 ---
 
-[1.0.0]: https://github.com/yourusername/envsentry/releases/tag/v1.0.0
+[1.0.0]: https://github.com/yourusername/envotary/releases/tag/v1.0.0

@@ -1,8 +1,8 @@
-# EnvSentry
+# Envotary
 
 **Environment Configuration Auditor**
 
-EnvSentry is a security-focused CLI tool that audits environment variable configurations in your projects. It validates `.env` files against schemas, detects common configuration errors, and ensures secrets are properly configured—without ever exposing actual secret values.
+Envotary is a security-focused CLI tool that audits environment variable configurations in your projects. It validates `.env` files against schemas, detects common configuration errors, and ensures secrets are properly configured—without ever exposing actual secret values.
 
 ## Why Audit Environment Configurations?
 
@@ -14,7 +14,7 @@ Environment variables are a common attack vector and source of bugs:
 - **Duplicate definitions** create unpredictable behavior
 - **Exposed secrets** in logs and error messages compromise security
 
-EnvSentry catches these issues during development and in CI pipelines, before they reach production.
+Envotary catches these issues during development and in CI pipelines, before they reach production.
 
 ## Key Features
 
@@ -23,7 +23,7 @@ EnvSentry catches these issues during development and in CI pipelines, before th
 - ✅ **Duplicate Detection** - Catches duplicate variable definitions that cause conflicts
 - ✅ **Placeholder Detection** - Warns about common placeholder patterns that shouldn't reach production
 - ✅ **No Secret Exposure** - Never prints, logs, or serializes actual secret values (security-first design)
-- ✅ **Schema Definition** - Define validation rules in `.envsentry.toml` with type constraints
+- ✅ **Schema Definition** - Define validation rules in `.envotary.toml` with type constraints
 - ✅ **Multiple Output Formats** - Human-readable terminal output or JSON for CI/tooling integration
 - ✅ **CI Integration Ready** - Exit codes designed for automated pipelines
 
@@ -32,14 +32,14 @@ EnvSentry catches these issues during development and in CI pipelines, before th
 ### From PyPI (when published)
 
 ```bash
-pip install envsentry
+pip install envotary
 ```
 
 ### Local Installation (Development)
 
 ```bash
-git clone https://github.com/yourusername/envsentry.git
-cd envsentry
+git clone https://github.com/yourusername/envotary.git
+cd envotary
 python -m pip install -e .
 ```
 
@@ -67,7 +67,7 @@ PORT=8000
 ENVIRONMENT=development
 ```
 
-### 3. Create `.envsentry.toml` configuration
+### 3. Create `.envotary.toml` configuration
 
 ```toml
 [project]
@@ -108,10 +108,10 @@ required = true
 choices = ["development", "staging", "production"]
 ```
 
-### 4. Run EnvSentry
+### 4. Run Envotary
 
 ```bash
-envsentry scan
+envotary scan
 ```
 
 ## Example Output
@@ -120,7 +120,7 @@ envsentry scan
 
 ```
 ╭───────────────────────────────────────────────────────────────────────────────╮
-│ EnvSentry Security Audit                                                      │
+│ Envotary Security Audit                                                      │
 │ Project: /path/to/your/project                                                │
 ╰───────────────────────────────────────────────────────────────────────────────╯
 
@@ -137,7 +137,7 @@ Summary: 0 error(s) | 0 warning(s)
 
 ```
 ╭───────────────────────────────────────────────────────────────────────────────╮
-│ EnvSentry Security Audit                                                      │
+│ Envotary Security Audit                                                      │
 │ Project: /path/to/your/project                                                │
 ╰───────────────────────────────────────────────────────────────────────────────╯
 
@@ -163,7 +163,7 @@ Warnings:
 For CI/CD integration or tooling, use JSON format:
 
 ```bash
-envsentry scan --format json
+envotary scan --format json
 ```
 
 Example output:
@@ -208,11 +208,11 @@ Example output:
 
 ## Security Guarantees
 
-EnvSentry is designed with security as the top priority:
+Envotary is designed with security as the top priority:
 
 1. **Never exposes secret values** - Secret variable values are never printed to terminal, written to logs, or included in JSON output
 2. **No network requests** - All validation is local; no data leaves your machine
-3. **No file modifications** - EnvSentry only reads files, never writes or modifies them
+3. **No file modifications** - Envotary only reads files, never writes or modifies them
 4. **No code execution** - Does not execute any code from scanned projects
 5. **Safe error handling** - Error messages never include actual secret values
 6. **Symlink safety** - Follows symlinks safely without escaping project boundaries
@@ -221,7 +221,7 @@ See [docs/security.md](docs/security.md) for detailed security documentation.
 
 ## Supported Dotenv Syntax
 
-EnvSentry supports standard `.env` file syntax:
+Envotary supports standard `.env` file syntax:
 
 ```bash
 # Comments
@@ -238,12 +238,12 @@ line2"
 
 - **Placeholder detection is heuristic-based** - May not catch all placeholder patterns or may flag legitimate values
 - **URL validation is syntax-only** - Does not verify that URLs are reachable or valid
-- **No runtime validation** - EnvSentry validates configuration files, not runtime behavior
+- **No runtime validation** - Envotary validates configuration files, not runtime behavior
 - **Boolean values** - Accepts `true`, `false`, `1`, `0`, `yes`, `no`, `on`, `off` (case-insensitive)
 
 ## Configuration
 
-See [docs/configuration.md](docs/configuration.md) for complete `.envsentry.toml` configuration reference.
+See [docs/configuration.md](docs/configuration.md) for complete `.envotary.toml` configuration reference.
 
 ## Examples
 
@@ -261,8 +261,8 @@ See [docs/examples.md](docs/examples.md) for detailed usage examples.
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/envsentry.git
-cd envsentry
+git clone https://github.com/yourusername/envotary.git
+cd envotary
 
 # Create virtual environment
 python -m venv venv
@@ -282,7 +282,7 @@ python -m pytest tests/ -v
 python -m pytest tests/test_security.py -v
 
 # Run with coverage
-python -m pytest tests/ --cov=envsentry --cov-report=html
+python -m pytest tests/ --cov=envotary --cov-report=html
 ```
 
 ### Code Quality
@@ -292,7 +292,7 @@ python -m pytest tests/ --cov=envsentry --cov-report=html
 ruff check src/ tests/
 
 # Type checking
-mypy src/envsentry
+mypy src/envotary
 
 # Format code
 ruff format src/ tests/
@@ -308,7 +308,7 @@ python -m pip install build
 python -m build
 
 # Install from built package
-pip install dist/envsentry-*.whl
+pip install dist/envotary-*.whl
 ```
 
 ## Contributing

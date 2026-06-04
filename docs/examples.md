@@ -1,6 +1,6 @@
 # Usage Examples
 
-This document provides practical examples of using EnvSentry in different scenarios.
+This document provides practical examples of using Envotary in different scenarios.
 
 ## Table of Contents
 
@@ -23,7 +23,7 @@ You have a basic web application with a few environment variables. You want to v
 myapp/
 ├── .env
 ├── .env.example
-└── .envsentry.toml
+└── .envotary.toml
 ```
 
 ### Files
@@ -58,7 +58,7 @@ PORT=8000
 ENVIRONMENT=development
 ```
 
-**`.envsentry.toml`**:
+**`.envotary.toml`**:
 ```toml
 [project]
 name = "myapp"
@@ -103,18 +103,18 @@ required = true
 choices = ["development", "staging", "production"]
 ```
 
-### Running EnvSentry
+### Running Envotary
 
 ```bash
 cd myapp
-envsentry scan
+envotary scan
 ```
 
 ### Expected Output
 
 ```
 ╭───────────────────────────────────────────────────────────────╮
-│ EnvSentry Security Audit                                      │
+│ Envotary Security Audit                                      │
 │ Project: myapp                                                │
 ╰───────────────────────────────────────────────────────────────╯
 
@@ -133,7 +133,7 @@ Summary: 0 error(s) | 0 warning(s)
 
 Django project with typical Django environment variables including SECRET_KEY, database, static files, and email configuration.
 
-### `.envsentry.toml`
+### `.envotary.toml`
 
 ```toml
 [project]
@@ -249,10 +249,10 @@ AWS_STORAGE_BUCKET_NAME=my-bucket
 ENVIRONMENT=production
 ```
 
-### Running EnvSentry
+### Running Envotary
 
 ```bash
-envsentry scan --path /path/to/django-app
+envotary scan --path /path/to/django-app
 ```
 
 See the [examples/django](../examples/django/) directory for a complete working example.
@@ -263,7 +263,7 @@ See the [examples/django](../examples/django/) directory for a complete working 
 
 Express.js API with JWT authentication, database, and external API integration.
 
-### `.envsentry.toml`
+### `.envotary.toml`
 
 ```toml
 [project]
@@ -369,7 +369,7 @@ See the [examples/node](../examples/node/) directory for a complete working exam
 
 ### Scenario
 
-Run EnvSentry as part of your CI pipeline to catch configuration issues before deployment.
+Run Envotary as part of your CI pipeline to catch configuration issues before deployment.
 
 ### GitHub Actions Workflow
 
@@ -398,17 +398,17 @@ jobs:
         with:
           python-version: '3.11'
       
-      - name: Install EnvSentry
-        run: pip install envsentry
+      - name: Install Envotary
+        run: pip install envotary
       
-      - name: Run EnvSentry audit
-        run: envsentry scan --format json > audit-results.json
+      - name: Run Envotary audit
+        run: envotary scan --format json > audit-results.json
       
       - name: Upload audit results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: envsentry-audit
+          name: envotary-audit
           path: audit-results.json
 
   test:
@@ -434,8 +434,8 @@ env-audit:
   stage: audit
   image: python:3.11
   script:
-    - pip install envsentry
-    - envsentry scan
+    - pip install envotary
+    - envotary scan
   artifacts:
     reports:
       junit: audit-results.xml
@@ -457,11 +457,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install EnvSentry
-          command: pip install envsentry
+          name: Install Envotary
+          command: pip install envotary
       - run:
           name: Run environment audit
-          command: envsentry scan
+          command: envotary scan
       - store_artifacts:
           path: audit-results.json
 
@@ -478,7 +478,7 @@ workflows:
 
 ### Scenario
 
-Use EnvSentry as a pre-commit hook to prevent committing invalid configurations.
+Use Envotary as a pre-commit hook to prevent committing invalid configurations.
 
 ### Pre-commit Hook Setup
 
@@ -488,9 +488,9 @@ Use EnvSentry as a pre-commit hook to prevent committing invalid configurations.
 repos:
   - repo: local
     hooks:
-      - id: envsentry
-        name: EnvSentry Configuration Audit
-        entry: envsentry scan
+      - id: envotary
+        name: Envotary Configuration Audit
+        entry: envotary scan
         language: system
         pass_filenames: false
         always_run: true
@@ -513,21 +513,21 @@ pre-commit install
 ```bash
 #!/bin/bash
 
-# Run EnvSentry audit
-echo "Running EnvSentry configuration audit..."
-envsentry scan
+# Run Envotary audit
+echo "Running Envotary configuration audit..."
+envotary scan
 
 # Capture exit code
 EXIT_CODE=$?
 
 if [ $EXIT_CODE -ne 0 ]; then
     echo ""
-    echo "❌ EnvSentry audit failed. Please fix configuration issues before committing."
+    echo "❌ Envotary audit failed. Please fix configuration issues before committing."
     echo ""
     exit 1
 fi
 
-echo "✓ EnvSentry audit passed"
+echo "✓ Envotary audit passed"
 exit 0
 ```
 
@@ -545,20 +545,20 @@ echo "PORT=invalid" >> .env
 git add .env
 git commit -m "test"
 
-# EnvSentry will prevent commit:
-# ❌ EnvSentry audit failed. Please fix configuration issues before committing.
+# Envotary will prevent commit:
+# ❌ Envotary audit failed. Please fix configuration issues before committing.
 ```
 
 ## Example 6: JSON Output for Tooling Integration
 
 ### Scenario
 
-Integrate EnvSentry results into custom tooling, dashboards, or reporting systems.
+Integrate Envotary results into custom tooling, dashboards, or reporting systems.
 
 ### Generate JSON Report
 
 ```bash
-envsentry scan --format json > audit-results.json
+envotary scan --format json > audit-results.json
 ```
 
 ### JSON Output Format
@@ -631,10 +631,10 @@ import json
 import subprocess
 import sys
 
-def run_envsentry_audit(project_path: str) -> dict:
-    """Run EnvSentry and return parsed results."""
+def run_envotary_audit(project_path: str) -> dict:
+    """Run Envotary and return parsed results."""
     result = subprocess.run(
-        ["envsentry", "scan", "--path", project_path, "--format", "json"],
+        ["envotary", "scan", "--path", project_path, "--format", "json"],
         capture_output=True,
         text=True
     )
@@ -646,7 +646,7 @@ def run_envsentry_audit(project_path: str) -> dict:
     }
 
 # Run audit
-audit = run_envsentry_audit("/path/to/project")
+audit = run_envotary_audit("/path/to/project")
 
 # Check results
 if audit["exit_code"] == 0:
@@ -665,10 +665,10 @@ else:
 ```javascript
 const { execSync } = require('child_process');
 
-function runEnvSentryAudit(projectPath) {
+function runEnvotaryAudit(projectPath) {
   try {
     const output = execSync(
-      `envsentry scan --path ${projectPath} --format json`,
+      `envotary scan --path ${projectPath} --format json`,
       { encoding: 'utf-8' }
     );
     
@@ -692,7 +692,7 @@ function runEnvSentryAudit(projectPath) {
 }
 
 // Run audit
-const audit = runEnvSentryAudit('/path/to/project');
+const audit = runEnvotaryAudit('/path/to/project');
 
 if (audit.success) {
   console.log('✓ Audit passed');
@@ -737,7 +737,7 @@ def send_to_dashboard(project_name: str, audit_results: dict):
 
 # Run audit and send results
 result = subprocess.run(
-    ["envsentry", "scan", "--format", "json"],
+    ["envotary", "scan", "--format", "json"],
     capture_output=True,
     text=True
 )
@@ -754,16 +754,16 @@ Use different `.env` files:
 
 ```bash
 # Development
-envsentry scan --env-file .env.development
+envotary scan --env-file .env.development
 
 # Production (in CI)
-envsentry scan --env-file .env.production
+envotary scan --env-file .env.production
 ```
 
 ### Multiple Environments
 
 ```toml
-# .envsentry.toml
+# .envotary.toml
 [variables.ENVIRONMENT]
 type = "string"
 required = true
@@ -781,16 +781,16 @@ choices = ["debug", "info", "warn", "error"]
 
 ### Microservices
 
-Each service has its own `.envsentry.toml`:
+Each service has its own `.envotary.toml`:
 
 ```
 project/
 ├── service-a/
 │   ├── .env
-│   └── .envsentry.toml
+│   └── .envotary.toml
 ├── service-b/
 │   ├── .env
-│   └── .envsentry.toml
+│   └── .envotary.toml
 └── .github/
     └── workflows/
         └── ci.yml
@@ -800,10 +800,10 @@ CI runs audit for each service:
 
 ```yaml
 - name: Audit Service A
-  run: envsentry scan --path service-a
+  run: envotary scan --path service-a
 
 - name: Audit Service B
-  run: envsentry scan --path service-b
+  run: envotary scan --path service-b
 ```
 
 ## Troubleshooting
@@ -820,10 +820,10 @@ CI runs audit for each service:
 
 ```bash
 # Solution 1: Create config
-envsentry init
+envotary init
 
 # Solution 2: Specify path
-envsentry scan --config /path/to/.envsentry.toml
+envotary scan --config /path/to/.envotary.toml
 ```
 
 **Issue**: `False positive placeholder warning`
@@ -836,7 +836,7 @@ Solution: This is a warning, not an error. Document that it's expected or adjust
 
 **Issue**: Scan succeeds locally but fails in CI
 
-- Ensure `.envsentry.toml` is committed
+- Ensure `.envotary.toml` is committed
 - Check that `.env.example` exists if `require_example_file = true`
 - Verify file paths are relative to project root
 

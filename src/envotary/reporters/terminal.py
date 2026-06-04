@@ -1,4 +1,4 @@
-"""Terminal reporter for EnvSentry using Rich for formatted output.
+"""Terminal reporter for Envotary using Rich for formatted output.
 
 This module provides a professional, human-readable terminal reporter
 that displays audit results with proper formatting and color coding.
@@ -11,7 +11,7 @@ from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
 
-from envsentry.models import AuditResult, ValidationFinding
+from envotary.models import AuditResult, ValidationFinding
 
 
 class TerminalReporter:
@@ -56,7 +56,7 @@ class TerminalReporter:
         self.console.print()
         self.console.print(
             Panel(
-                f"[bold]EnvSentry Security Audit[/bold]\n[dim]Project:[/dim] {project_path}",
+                f"[bold]Envotary Security Audit[/bold]\n[dim]Project:[/dim] {project_path}",
                 border_style="blue",
             )
         )

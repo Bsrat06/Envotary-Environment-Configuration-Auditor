@@ -1,7 +1,7 @@
-"""File discovery for EnvSentry.
+"""File discovery for Envotary.
 
 This module provides functionality to locate .env, .env.example, and
-.envsentry.toml configuration files within a project directory.
+.envotary.toml configuration files within a project directory.
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ def discover_files(
         Dictionary with keys:
             - 'env_file': Path to .env file, or None if not found.
             - 'example_file': Path to .env.example file, or None if not found.
-            - 'config_file': Path to .envsentry.toml file, or None if not found.
+            - 'config_file': Path to .envotary.toml file, or None if not found.
     """
     result: dict[str, Path | None] = {
         "env_file": None,
@@ -64,8 +64,8 @@ def discover_files(
         if default_example.exists() and default_example.is_file():
             result["example_file"] = default_example
 
-    # Discover .envsentry.toml config file
-    config_path = project_path / ".envsentry.toml"
+    # Discover .envotary.toml config file
+    config_path = project_path / ".envotary.toml"
     if config_path.exists() and config_path.is_file():
         result["config_file"] = config_path
 

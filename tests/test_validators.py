@@ -1,8 +1,8 @@
 """Tests for validators module."""
 
-from envsentry import validators
-from envsentry.config import SchemaVariable
-from envsentry.models import EnvVariable, ParsedEnvFile
+from envotary import validators
+from envotary.config import SchemaVariable
+from envotary.models import EnvVariable, ParsedEnvFile
 
 
 def test_check_missing_required():

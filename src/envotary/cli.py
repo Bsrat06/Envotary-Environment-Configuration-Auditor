@@ -1,6 +1,6 @@
-"""CLI interface for EnvSentry using Typer.
+"""CLI interface for Envotary using Typer.
 
-This module provides the command-line interface for EnvSentry,
+This module provides the command-line interface for Envotary,
 including scan and init commands.
 """
 
@@ -11,13 +11,13 @@ from pathlib import Path
 import typer
 from rich.console import Console
 
-from envsentry.engine import run_audit
-from envsentry.exit_codes import EXIT_AUDIT_FAILED, EXIT_ERROR, EXIT_SUCCESS
-from envsentry.reporters.json import JSONReporter
-from envsentry.reporters.terminal import TerminalReporter
+from envotary.engine import run_audit
+from envotary.exit_codes import EXIT_AUDIT_FAILED, EXIT_ERROR, EXIT_SUCCESS
+from envotary.reporters.json import JSONReporter
+from envotary.reporters.terminal import TerminalReporter
 
 app = typer.Typer(
-    name="envsentry",
+    name="envotary",
     help="Security-focused environment variable auditing tool",
     add_completion=False,
 )
@@ -60,13 +60,13 @@ def scan(
     Examples:
 
         # Scan current directory with terminal output
-        envsentry scan
+        envotary scan
 
         # Scan specific directory with JSON output
-        envsentry scan --path /path/to/project --format json
+        envotary scan --path /path/to/project --format json
 
         # Use specific .env file
-        envsentry scan --env-file .env.production
+        envotary scan --env-file .env.production
     """
     # Validate format option
     format_lower = format.lower()
@@ -123,9 +123,9 @@ def init(
         resolve_path=True,
     ),
 ) -> None:
-    """Initialize EnvSentry configuration with a starter .envsentry.toml file.
+    """Initialize Envotary configuration with a starter .envotary.toml file.
 
-    This command creates a .envsentry.toml configuration file with helpful
+    This command creates a .envotary.toml configuration file with helpful
     comments and example variable schemas to get you started quickly.
 
     The configuration file will not be created if one already exists.
@@ -133,12 +133,12 @@ def init(
     Example:
 
         # Create config in current directory
-        envsentry init
+        envotary init
 
         # Create config in specific directory
-        envsentry init --path /path/to/project
+        envotary init --path /path/to/project
     """
-    config_path = path / ".envsentry.toml"
+    config_path = path / ".envotary.toml"
 
     # Check if config already exists
     if config_path.exists():
@@ -151,7 +151,7 @@ def init(
         raise typer.Exit(code=EXIT_ERROR)
 
     # Create starter configuration
-    starter_config = '''# EnvSentry Configuration File
+    starter_config = '''# Envotary Configuration File
 # This file defines the schema for your environment variables,
 # specifying which variables are required, their types, and validation rules.
 
@@ -193,8 +193,8 @@ def init(
         console.print(f"[green]✓[/green] Created configuration file: {config_path}")
         console.print()
         console.print("[dim]Next steps:[/dim]")
-        console.print("  1. Edit .envsentry.toml to define your variable schemas")
-        console.print("  2. Run 'envsentry scan' to audit your project")
+        console.print("  1. Edit .envotary.toml to define your variable schemas")
+        console.print("  2. Run 'envotary scan' to audit your project")
         raise typer.Exit(code=EXIT_SUCCESS)
     except typer.Exit:
         # Re-raise typer exits (these are intentional)

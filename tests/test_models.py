@@ -1,11 +1,11 @@
-"""Tests for data models in EnvSentry.
+"""Tests for data models in Envotary.
 
 Tests model construction, field types, serialization, and immutability.
 """
 
 from __future__ import annotations
 
-from envsentry.models import AuditResult, EnvVariable, ParsedEnvFile, ValidationFinding
+from envotary.models import AuditResult, EnvVariable, ParsedEnvFile, ValidationFinding
 
 
 class TestEnvVariable:

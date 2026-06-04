@@ -1,4 +1,4 @@
-"""Audit engine for EnvSentry.
+"""Audit engine for Envotary.
 
 This module orchestrates the complete audit workflow: file discovery,
 parsing, schema loading, validation, and result aggregation.
@@ -8,11 +8,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from envsentry import validators
-from envsentry.config import infer_schema_from_example, load_config
-from envsentry.discovery import discover_files
-from envsentry.models import AuditResult, ValidationFinding
-from envsentry.parser import ParseError, parse_dotenv_file
+from envotary import validators
+from envotary.config import infer_schema_from_example, load_config
+from envotary.discovery import discover_files
+from envotary.models import AuditResult, ValidationFinding
+from envotary.parser import ParseError, parse_dotenv_file
 
 
 def run_audit(
@@ -21,7 +21,7 @@ def run_audit(
     example_file: str | None = None,
     settings: dict | None = None,
 ) -> AuditResult:
-    """Run a complete EnvSentry audit on a project.
+    """Run a complete Envotary audit on a project.
 
     Args:
         project_path: Root directory of the project to audit.
@@ -116,7 +116,7 @@ def run_audit(
                 file=str(config_file_path) if config_file_path else "(unknown)",
                 line=None,
                 message=f"Failed to load configuration: {e}",
-                remediation="Fix errors in .envsentry.toml or provide a valid .env.example",
+                remediation="Fix errors in .envotary.toml or provide a valid .env.example",
             )
         )
 

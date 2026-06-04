@@ -1,12 +1,12 @@
 # Node.js Example
 
-This example demonstrates EnvSentry configuration for a typical Node.js/Express project.
+This example demonstrates Envotary configuration for a typical Node.js/Express project.
 
 ## Files
 
 - `.env.example` - Template for Node.js environment variables
 - `.env` - Actual environment file (contains one intentional issue for demonstration)
-- `.envsentry.toml` - Node.js-specific validation rules
+- `.envotary.toml` - Node.js-specific validation rules
 
 ## Variables
 
@@ -16,12 +16,12 @@ This example demonstrates EnvSentry configuration for a typical Node.js/Express 
 - `JWT_SECRET` - JWT signing secret, marked as secret
 - `API_BASE_URL` - Base URL for external API
 
-## Running EnvSentry
+## Running Envotary
 
 From the repository root:
 
 ```bash
-envsentry scan --path examples/node
+envotary scan --path examples/node
 ```
 
 This example includes a placeholder value in `.env` for JWT_SECRET to demonstrate placeholder detection.

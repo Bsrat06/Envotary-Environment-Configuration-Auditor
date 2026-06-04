@@ -1,4 +1,4 @@
-"""JSON reporter for EnvSentry machine-readable output.
+"""JSON reporter for Envotary machine-readable output.
 
 This module provides a JSON reporter that produces stable, parseable
 output suitable for CI/CD integration and automation.
@@ -9,8 +9,8 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 
-from envsentry import __version__
-from envsentry.models import AuditResult
+from envotary import __version__
+from envotary.models import AuditResult
 
 
 class JSONReporter:
