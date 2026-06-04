@@ -142,7 +142,11 @@ def test_run_audit_explicit_paths(tmp_path):
     example_file = config_dir / "example.env"
     example_file.write_text("VAR1=\n")
 
-    result = run_audit(tmp_path, env_file="config/production.env", example_file="config/example.env")
+    result = run_audit(
+        tmp_path,
+        env_file="config/production.env",
+        example_file="config/example.env",
+    )
 
     assert result.project_path == str(tmp_path.resolve())
     # Should find and parse the explicit files

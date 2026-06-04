@@ -230,7 +230,9 @@ def test_scan_format_case_insensitive(cli_runner: CliRunner, sample_project: Pat
     assert "tool_version" in data
 
 
-def test_init_default_path(cli_runner: CliRunner, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_init_default_path(
+    cli_runner: CliRunner, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     """Test init command uses current directory by default."""
     project_dir = tmp_path / "default_project"
     project_dir.mkdir()

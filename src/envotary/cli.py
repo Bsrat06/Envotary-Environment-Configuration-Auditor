@@ -85,13 +85,13 @@ def scan(
 
         # Select and use appropriate reporter
         if format_lower == "json":
-            reporter = JSONReporter()
-            output = reporter.report(audit_result)
+            json_reporter = JSONReporter()
+            output = json_reporter.report(audit_result)
             # Use print() to avoid Rich formatting for JSON
             print(output)
         else:
-            reporter = TerminalReporter()
-            reporter.report(audit_result)
+            term_reporter = TerminalReporter()
+            term_reporter.report(audit_result)
 
         # Determine exit code based on findings
         error_count = audit_result.summary.get("error", 0)
@@ -108,7 +108,7 @@ def scan(
         console.print(
             f"[red]Error:[/red] Execution failed: {e}",
         )
-        raise typer.Exit(code=EXIT_ERROR)
+        raise typer.Exit(code=EXIT_ERROR) from e
 
 
 @app.command()
@@ -203,7 +203,7 @@ def init(
         console.print(
             f"[red]Error:[/red] Failed to create configuration file: {e}",
         )
-        raise typer.Exit(code=EXIT_ERROR)
+        raise typer.Exit(code=EXIT_ERROR) from e
 
 
 def main() -> None:

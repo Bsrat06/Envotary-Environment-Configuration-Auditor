@@ -71,7 +71,10 @@ def check_undocumented(
                     file=env_var.file,
                     line=env_var.line_number,
                     message=f"Variable '{var_name}' is not documented in schema",
-                    remediation=f"Add '{var_name}' to .envotary.toml or .env.example, or remove if unused",
+                    remediation=(
+                        f"Add '{var_name}' to .envotary.toml or .env.example, "
+                        "or remove if unused"
+                    ),
                 )
             )
 
@@ -91,6 +94,7 @@ def check_duplicates(parsed_file: ParsedEnvFile) -> list[ValidationFinding]:
 
     for var_name, line_numbers in parsed_file.duplicates.items():
         # Report on the first occurrence
+        line_list = ', '.join(map(str, line_numbers))
         findings.append(
             ValidationFinding(
                 code="ENV003",
@@ -98,8 +102,13 @@ def check_duplicates(parsed_file: ParsedEnvFile) -> list[ValidationFinding]:
                 variable=var_name,
                 file=parsed_file.path,
                 line=line_numbers[0],
-                message=f"Variable '{var_name}' is defined {len(line_numbers)} times (lines: {', '.join(map(str, line_numbers))})",
-                remediation=f"Remove duplicate definitions of '{var_name}' and keep only one",
+                message=(
+                    f"Variable '{var_name}' is defined {len(line_numbers)} times "
+                    f"(lines: {line_list})"
+                ),
+                remediation=(
+                    f"Remove duplicate definitions of '{var_name}' and keep only one"
+                ),
             )
         )
 
@@ -123,12 +132,13 @@ def check_empty_required(
 
     for var_name, env_var in env_vars.items():
         var_schema = schema.get(var_name)
-        if var_schema and var_schema.required:
-            if env_var.value is None or env_var.value.strip() == "":
-                findings.append(
-                    ValidationFinding(
-                        code="ENV004",
-                        severity="error",
+        if var_schema and var_schema.required and (
+            env_var.value is None or env_var.value.strip() == ""
+        ):
+            findings.append(
+                ValidationFinding(
+                    code="ENV004",
+                    severity="error",
                         variable=var_name,
                         file=env_var.file,
                         line=env_var.line_number,
@@ -192,7 +202,10 @@ def check_invalid_types(
             valid_false = {"false", "0", "no", "off"}
             if value.lower() not in (valid_true | valid_false):
                 is_valid = False
-                error_msg = f"Variable '{var_name}' must be a boolean (true/false/1/0/yes/no/on/off)"
+                error_msg = (
+                    f"Variable '{var_name}' must be a boolean "
+                    "(true/false/1/0/yes/no/on/off)"
+                )
 
         if not is_valid:
             findings.append(
@@ -405,8 +418,14 @@ def check_length_constraints(
                     variable=var_name,
                     file=env_var.file,
                     line=env_var.line_number,
-                    message=f"Variable '{var_name}' is too short (minimum length: {var_schema.min_length})",
-                    remediation=f"Ensure {var_name} has at least {var_schema.min_length} characters",
+                    message=(
+                        f"Variable '{var_name}' is too short "
+                        f"(minimum length: {var_schema.min_length})"
+                    ),
+                    remediation=(
+                        f"Ensure {var_name} has at least "
+                        f"{var_schema.min_length} characters"
+                    ),
                 )
             )
 
@@ -419,8 +438,14 @@ def check_length_constraints(
                     variable=var_name,
                     file=env_var.file,
                     line=env_var.line_number,
-                    message=f"Variable '{var_name}' is too long (maximum length: {var_schema.max_length})",
-                    remediation=f"Ensure {var_name} has at most {var_schema.max_length} characters",
+                    message=(
+                        f"Variable '{var_name}' is too long "
+                        f"(maximum length: {var_schema.max_length})"
+                    ),
+                    remediation=(
+                        f"Ensure {var_name} has at most "
+                        f"{var_schema.max_length} characters"
+                    ),
                 )
             )
 
@@ -460,10 +485,7 @@ def check_numeric_constraints(
 
         # Try to parse as number
         try:
-            if var_schema.type == "integer":
-                numeric_value = int(value)
-            else:
-                numeric_value = float(value)
+            numeric_value = int(value) if var_schema.type == "integer" else float(value)
         except ValueError:
             # Type error - will be caught by check_invalid_types
             continue

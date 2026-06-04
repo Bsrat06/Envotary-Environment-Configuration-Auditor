@@ -18,8 +18,10 @@ def discover_files(
 
     Args:
         project_path: Root directory of the project to scan.
-        env_file: Optional explicit path to .env file (relative to project_path or absolute).
-        example_file: Optional explicit path to .env.example file (relative to project_path or absolute).
+        env_file: Optional explicit path to .env file
+            (relative to project_path or absolute).
+        example_file: Optional explicit path to .env.example file
+            (relative to project_path or absolute).
 
     Returns:
         Dictionary with keys:

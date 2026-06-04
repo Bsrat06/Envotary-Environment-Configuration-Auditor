@@ -84,7 +84,7 @@ VAR1=value1
 VAR2=value2
 
 # Another comment
-  
+
 VAR3=value3
 """
         )
@@ -232,7 +232,8 @@ max = 10
 """
         )
 
-        # Config loader accepts contradictory constraints - they would be detected at validation time
+        # Config loader accepts contradictory constraints
+        # They would be detected at validation time
         config = load_config(config_file)
         assert "VAR1" in config
         assert config["VAR1"].min == 100

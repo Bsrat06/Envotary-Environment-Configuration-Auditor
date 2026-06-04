@@ -67,9 +67,9 @@ def load_config(config_path: Path | None) -> dict[str, SchemaVariable]:
         with open(config_path, "rb") as f:
             data = tomllib.load(f)
     except tomllib.TOMLDecodeError as e:
-        raise ValueError(f"Invalid TOML in {config_path}: {e}")
+        raise ValueError(f"Invalid TOML in {config_path}: {e}") from e
     except OSError as e:
-        raise ValueError(f"Failed to read config file {config_path}: {e}")
+        raise ValueError(f"Failed to read config file {config_path}: {e}") from e
 
     # Parse [variables] section
     variables_section = data.get("variables", {})
@@ -97,8 +97,10 @@ def load_config(config_path: Path | None) -> dict[str, SchemaVariable]:
         # Check for unknown properties
         unknown = set(var_config.keys()) - valid_properties
         if unknown:
+            unknown_props = ', '.join(sorted(unknown))
             raise ValueError(
-                f"Unknown properties for variable '{var_name}' in {config_path}: {', '.join(sorted(unknown))}"
+                f"Unknown properties for variable '{var_name}' "
+                f"in {config_path}: {unknown_props}"
             )
 
         # Extract properties with defaults

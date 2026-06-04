@@ -69,9 +69,9 @@ def parse_dotenv_file(file_path: Path) -> ParsedEnvFile:
         with open(file_path, encoding="utf-8") as f:
             lines = f.readlines()
     except UnicodeDecodeError as e:
-        raise ParseError(str(file_path), None, f"File encoding error: {e}")
+        raise ParseError(str(file_path), None, f"File encoding error: {e}") from e
     except OSError as e:
-        raise ParseError(str(file_path), None, f"Failed to read file: {e}")
+        raise ParseError(str(file_path), None, f"Failed to read file: {e}") from e
 
     for line_num, line in enumerate(lines, start=1):
         # Strip whitespace

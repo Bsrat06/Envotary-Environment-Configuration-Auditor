@@ -157,7 +157,7 @@ def test_infer_schema_from_example():
     assert "VAR3" in schema
 
     # All should be required strings
-    for var_name, var_schema in schema.items():
+    for _var_name, var_schema in schema.items():
         assert var_schema.required is True
         assert var_schema.type == "string"
         assert var_schema.secret is False

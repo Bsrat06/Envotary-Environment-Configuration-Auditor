@@ -141,15 +141,23 @@ def test_validation_finding_never_stores_secrets() -> None:
     # Check every finding object
     for finding in all_findings:
         # Check all string fields in ValidationFinding
-        assert TEST_SECRET_1 not in finding.code, f"Secret in finding.code: {finding.code}"
-        assert TEST_SECRET_1 not in finding.message, f"Secret in finding.message: {finding.message}"
-        assert TEST_SECRET_1 not in finding.remediation, f"Secret in finding.remediation: {finding.remediation}"
-        assert TEST_SECRET_1 not in finding.file, f"Secret in finding.file: {finding.file}"
+        assert TEST_SECRET_1 not in finding.code, \
+            f"Secret in finding.code: {finding.code}"
+        assert TEST_SECRET_1 not in finding.message, \
+            f"Secret in finding.message: {finding.message}"
+        assert TEST_SECRET_1 not in finding.remediation, \
+            f"Secret in finding.remediation: {finding.remediation}"
+        assert TEST_SECRET_1 not in finding.file, \
+            f"Secret in finding.file: {finding.file}"
 
-        assert TEST_SECRET_2 not in finding.code, f"Secret in finding.code: {finding.code}"
-        assert TEST_SECRET_2 not in finding.message, f"Secret in finding.message: {finding.message}"
-        assert TEST_SECRET_2 not in finding.remediation, f"Secret in finding.remediation: {finding.remediation}"
-        assert TEST_SECRET_2 not in finding.file, f"Secret in finding.file: {finding.file}"
+        assert TEST_SECRET_2 not in finding.code, \
+            f"Secret in finding.code: {finding.code}"
+        assert TEST_SECRET_2 not in finding.message, \
+            f"Secret in finding.message: {finding.message}"
+        assert TEST_SECRET_2 not in finding.remediation, \
+            f"Secret in finding.remediation: {finding.remediation}"
+        assert TEST_SECRET_2 not in finding.file, \
+            f"Secret in finding.file: {finding.file}"
 
 
 def test_exception_messages_never_leak_secrets(tmp_path: Path) -> None:
@@ -175,12 +183,13 @@ def test_exception_messages_never_leak_secrets(tmp_path: Path) -> None:
 
     # Even if parsing fails, the exception message should not contain secrets
     try:
-        parsed_bad = parse_dotenv_file(malformed_file)
+        parse_dotenv_file(malformed_file)
         # If it succeeds despite malformation, that's okay for this test
         # We're primarily checking that no exceptions leak secrets
     except Exception as e:
         error_message = str(e)
-        assert TEST_SECRET_1 not in error_message, f"Exception message leaked secret: {error_message}"
+        assert TEST_SECRET_1 not in error_message, \
+            f"Exception message leaked secret: {error_message}"
 
 
 def test_audit_result_summary_never_leaks_secrets() -> None:

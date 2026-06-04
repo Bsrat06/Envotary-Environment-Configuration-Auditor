@@ -6,6 +6,7 @@ parsing, schema loading, validation, and result aggregation.
 
 from __future__ import annotations
 
+import contextlib
 from pathlib import Path
 
 from envotary import validators
@@ -19,7 +20,8 @@ def run_audit(
     project_path: Path,
     env_file: str | None = None,
     example_file: str | None = None,
-    settings: dict | None = None,
+    config_file: str | None = None,
+    settings: dict[str, object] | None = None,
 ) -> AuditResult:
     """Run a complete Envotary audit on a project.
 
@@ -93,11 +95,9 @@ def run_audit(
     # Step 3: Parse .env.example file (if exists)
     parsed_example = None
     if example_file_path:
-        try:
-            parsed_example = parse_dotenv_file(example_file_path)
-        except (FileNotFoundError, ParseError):
+        with contextlib.suppress(FileNotFoundError, ParseError):
             # Non-critical - example file is optional
-            pass
+            parsed_example = parse_dotenv_file(example_file_path)
 
     # Step 4: Load or infer schema
     schema = {}
