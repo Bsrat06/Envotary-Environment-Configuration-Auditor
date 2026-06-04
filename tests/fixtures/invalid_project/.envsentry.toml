@@ -1,0 +1,24 @@
+# Configuration for invalid project testing
+
+[variables.DATABASE_URL]
+type = "url"
+required = true
+secret = true
+
+[variables.API_KEY]
+type = "string"
+required = true
+secret = true
+
+[variables.PORT]
+type = "integer"
+required = true
+
+[variables.DEBUG]
+type = "boolean"
+required = true
+
+[variables.ENVIRONMENT]
+type = "string"
+required = true
+choices = ["development", "staging", "production"]
