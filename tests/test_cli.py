@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 import pytest
+from click import unstyle
 from typer.testing import CliRunner
 
 from envotary.cli import app
@@ -85,19 +86,21 @@ def test_cli_help(cli_runner: CliRunner) -> None:
 def test_scan_help(cli_runner: CliRunner) -> None:
     """Test that scan --help displays command information."""
     result = cli_runner.invoke(app, ["scan", "--help"], color=False)
+    output = unstyle(result.output)
     assert result.exit_code == 0
-    assert "scan" in result.output.lower()
-    assert "--path" in result.output
-    assert "--env-file" in result.output
-    assert "--format" in result.output
+    assert "scan" in output.lower()
+    assert "--path" in output
+    assert "--env-file" in output
+    assert "--format" in output
 
 
 def test_init_help(cli_runner: CliRunner) -> None:
     """Test that init --help displays command information."""
     result = cli_runner.invoke(app, ["init", "--help"], color=False)
+    output = unstyle(result.output)
     assert result.exit_code == 0
-    assert "init" in result.output.lower()
-    assert "--path" in result.output
+    assert "init" in output.lower()
+    assert "--path" in output
 
 
 def test_scan_valid_project(cli_runner: CliRunner, sample_project: Path) -> None:
