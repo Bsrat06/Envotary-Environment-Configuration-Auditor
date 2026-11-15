@@ -75,29 +75,29 @@ def invalid_project(tmp_path: Path) -> Path:
 
 def test_cli_help(cli_runner: CliRunner) -> None:
     """Test that --help displays useful information."""
-    result = cli_runner.invoke(app, ["--help"])
+    result = cli_runner.invoke(app, ["--help"], color=False)
     assert result.exit_code == 0
-    assert "envotary" in result.stdout.lower()
-    assert "scan" in result.stdout
-    assert "init" in result.stdout
+    assert "envotary" in result.output.lower()
+    assert "scan" in result.output
+    assert "init" in result.output
 
 
 def test_scan_help(cli_runner: CliRunner) -> None:
     """Test that scan --help displays command information."""
-    result = cli_runner.invoke(app, ["scan", "--help"])
+    result = cli_runner.invoke(app, ["scan", "--help"], color=False)
     assert result.exit_code == 0
-    assert "scan" in result.stdout.lower()
-    assert "--path" in result.stdout
-    assert "--env-file" in result.stdout
-    assert "--format" in result.stdout
+    assert "scan" in result.output.lower()
+    assert "--path" in result.output
+    assert "--env-file" in result.output
+    assert "--format" in result.output
 
 
 def test_init_help(cli_runner: CliRunner) -> None:
     """Test that init --help displays command information."""
-    result = cli_runner.invoke(app, ["init", "--help"])
+    result = cli_runner.invoke(app, ["init", "--help"], color=False)
     assert result.exit_code == 0
-    assert "init" in result.stdout.lower()
-    assert "--path" in result.stdout
+    assert "init" in result.output.lower()
+    assert "--path" in result.output
 
 
 def test_scan_valid_project(cli_runner: CliRunner, sample_project: Path) -> None:

@@ -13,7 +13,7 @@ from pathlib import Path
 if sys.version_info >= (3, 11):
     import tomllib
 else:
-    import tomli as tomllib
+    import tomli as tomllib  # type: ignore[import-not-found]
 
 from envotary.models import ParsedEnvFile
 
@@ -130,7 +130,7 @@ def infer_schema_from_example(
         example_file: Parsed .env.example file.
 
     Returns:
-        Dictionary mapping variable names to basic SchemaVariable objects.
+        Dictionary mapping variable names to SchemaVariable objects.
     """
     schema: dict[str, SchemaVariable] = {}
 
